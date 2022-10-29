@@ -8,8 +8,7 @@ import java.util.List;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    List<User> findAllByUserTypeAndFullNameContaining(EUserType userType, String lastname);
-    List<User> findAllByUserTypeAndLastnameContaining(EUserType userType, String lastname);
+    List<User> findAllByUserTypeAndLastNameContaining(EUserType userType, String lastName);
 
 }
 

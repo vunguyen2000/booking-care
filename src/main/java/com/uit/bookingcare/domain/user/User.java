@@ -25,15 +25,15 @@ public class User extends SqlEntity {
     private String password;
     @Column(unique = true)
     private String email;
-    @Column(unique = true)
-    private String firstname;
-    @Column(unique = true)
-    private String lastname;
+    @Column(name = "firstName")
+    private String firstName;
+    @Column(name = "lastName")
+    private String lastName;
     private String address;
     private String image;
-    private String fullName;
     private String phonenumber;
 
+    @Column(name = "userType")
     @Enumerated(EnumType.STRING)
     private EUserType userType;
 
@@ -41,7 +41,7 @@ public class User extends SqlEntity {
     private EGender gender;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "role_id")
+    @JoinColumn(name = "roleId")
     private Role role;
 
     public User(Long id) {

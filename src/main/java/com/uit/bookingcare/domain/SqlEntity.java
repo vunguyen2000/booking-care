@@ -19,25 +19,15 @@ public class SqlEntity implements Serializable {
 
     protected static final long serialVersionUID = 1L;
 
-    @Column(columnDefinition = "boolean default false")
-    protected boolean isDeleted;
-
-//    @CreatedBy
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "created_by",foreignKey = @ForeignKey(name = "none"))
-    protected String createdBy;
-
-//    @LastModifiedBy
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "updated_by",foreignKey = @ForeignKey(name = "none"))
-    protected String updatedBy;
 
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "createdAt")
     protected Date createdAt = new Date();
 
     @LastModifiedDate
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "updatedAt")
     protected Date updatedAt = new Date();
 
 }

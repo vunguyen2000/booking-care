@@ -3,7 +3,6 @@ package com.uit.bookingcare.domain.speciatly;
 import com.uit.bookingcare.domain.SqlEntity;
 import com.uit.bookingcare.domain.clinics.Clinic;
 import com.uit.bookingcare.domain.doctor.join.DoctorInfor;
-import com.uit.bookingcare.domain.markdown.Markdown;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,7 +13,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "specialty")
+@Table(name = "specialties")
 public class Specialty extends SqlEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,20 +21,18 @@ public class Specialty extends SqlEntity {
     private String name;
     private String image;
 
+    @Column(name = "descriptionHTML", columnDefinition = "TEXT")
+    private String descriptionHTML;
+    @Column(name = "descriptionMarkdown", columnDefinition = "TEXT")
+    private String descriptionMarkdown;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "specialty")
     private List<DoctorInfor> doctorInfor = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "clinic_id")
+    @JoinColumn(name = "clinicId")
     private Clinic clinic;
 
-    @OneToOne(
-            mappedBy = "specialty",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true,
-            fetch = FetchType.LAZY
-    )
-    private Markdown markdown;
+
 
 }

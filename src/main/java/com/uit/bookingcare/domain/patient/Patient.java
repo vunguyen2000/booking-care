@@ -1,6 +1,6 @@
 package com.uit.bookingcare.domain.patient;
 
-import com.uit.bookingcare.domain.history.History;
+import com.uit.bookingcare.domain.history.Histories;
 import com.uit.bookingcare.domain.schedule.Schedule;
 import com.uit.bookingcare.domain.user.User;
 import lombok.Data;
@@ -25,7 +25,7 @@ public class Patient {
     private User user;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "patient")
-    private List<History> histories = new ArrayList<>();
+    private List<Histories> histories = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "patient")
     private List<Schedule> schedules = new ArrayList<>();

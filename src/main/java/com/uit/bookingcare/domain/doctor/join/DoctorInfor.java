@@ -7,8 +7,7 @@ import com.uit.bookingcare.constant.enums.EPrice;
 import com.uit.bookingcare.domain.SqlEntity;
 import com.uit.bookingcare.domain.booking.Booking;
 import com.uit.bookingcare.domain.clinics.Clinic;
-import com.uit.bookingcare.domain.history.History;
-import com.uit.bookingcare.domain.markdown.Markdown;
+import com.uit.bookingcare.domain.history.Histories;
 import com.uit.bookingcare.domain.schedule.Schedule;
 import com.uit.bookingcare.domain.speciatly.Specialty;
 import com.uit.bookingcare.domain.user.User;
@@ -18,7 +17,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -36,10 +34,8 @@ public class DoctorInfor extends SqlEntity {
     private EPayment payment;
     @Enumerated(EnumType.STRING)
     private EPrice price;
-
     @Enumerated(EnumType.STRING)
     private EPosition position;
-
     @Convert(converter = ECalendarShiftConverter.class)
     private List<ECalendarShift> calendarShifts;
 
@@ -47,16 +43,17 @@ public class DoctorInfor extends SqlEntity {
     @MapsId
     @JoinColumn(name = "id")
     private User user;
-
+    @Column(columnDefinition = "TEXT")
     private String note;
+
     private String count;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "clinic_id")
+    @JoinColumn(name = "clinicId")
     private Clinic clinic;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "specialty_id")
+    @JoinColumn(name = "specialtyId")
     private Specialty specialty;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "doctorInfor")
@@ -66,15 +63,7 @@ public class DoctorInfor extends SqlEntity {
     private Set<Schedule> schedules = new HashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "doctorInfor")
-    private Set<History> histories = new HashSet<>();
+    private Set<Histories> histories = new HashSet<>();
 
-
-    @OneToOne(
-            mappedBy = "doctorInfor",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true,
-            fetch = FetchType.LAZY
-    )
-    private Markdown markdown;
 
 }

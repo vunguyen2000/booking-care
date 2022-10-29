@@ -27,11 +27,11 @@ public class Schedule extends SqlEntity {
     private Time timeType;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "doctor_infor_id")
+    @JoinColumn(name = "doctorId")
     private DoctorInfor doctorInfor;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "patient_id")
+    @JoinColumn(name = "patientId")
     private Patient patient;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "schedule")

@@ -23,7 +23,7 @@ public class FindAllUserDoctorInforServiceImpl extends AbstractBaseService<Strin
 
     @Override
     public List<DoctorInforDto> doing(String lastname) {
-        List<User> result = userRepository.findAllByUserTypeAndLastnameContaining(EUserType.DOCTOR,lastname);
+        List<User> result = userRepository.findAllByUserTypeAndLastNameContaining(EUserType.DOCTOR,lastname);
         return doctorInforMapper.toDoctorInforDtoList(result);
     }
 }
