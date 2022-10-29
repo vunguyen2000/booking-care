@@ -1,6 +1,7 @@
 package com.uit.bookingcare.utils;
 
 import com.uit.bookingcare.constant.enums.ECalendarShift;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
@@ -28,6 +29,10 @@ public class ECalendarShiftConverter implements AttributeConverter<List<ECalenda
 
     @Override
     public List<ECalendarShift> convertToEntityAttribute(String string) {
+        if (StringUtils.isEmpty(string)){
+            return Collections.emptyList();
+        }
+
         return string != null ? Arrays.stream(string.split(SPLIT_CHAR))
                 .map(ECalendarShift::valueOf)
                 .collect(Collectors.toList()) : Collections.emptyList();

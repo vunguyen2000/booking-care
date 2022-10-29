@@ -1,15 +1,17 @@
 package com.uit.bookingcare.service.clinic.impl;
 
+import com.uit.bookingcare.domain.clinics.Clinic;
 import com.uit.bookingcare.dto.clinics.ClinicDto;
 import com.uit.bookingcare.mapper.clinics.ClinicMapper;
 import com.uit.bookingcare.repository.clinic.ClinicRepository;
+import com.uit.bookingcare.request.clinic.CreateClinicRequest;
+import com.uit.bookingcare.request.clinic.UpdateClinicRequest;
 import com.uit.bookingcare.service.clinic.ClinicService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Slf4j
@@ -21,17 +23,28 @@ public class ClinicServiceImpl implements ClinicService {
     private final ClinicRepository clinicRepository;
 
     @Override
-    public List<ClinicDto> findAllByName(String name) {
-        return clinicMapper.toClassDtoList(clinicRepository.findAllByNameContainingIgnoreCase(name));
+    public void save(CreateClinicRequest request) {
+        clinicRepository.save(clinicMapper.toClinic(request));
     }
 
     @Override
-    public List<ClinicDto> findAllByNameOrAddress(String name, String address) {
-        return clinicMapper.toClassDtoList(clinicRepository.findAllByNameContainingIgnoreCaseOrAddressContainingIgnoreCase(name, address));
+    public void update(Long id, UpdateClinicRequest request) {
+        Clinic oldClinic = clinicRepository.findById(id).orElse(null);
+        if (oldClinic == null){
+            return;
+        }
+        clinicMapper.updateClinic(request, oldClinic);
+        clinicRepository.save(oldClinic);
+    }
+
+    @Override
+    public List<ClinicDto> findAll() {
+        return clinicMapper.toClinicDtoList(clinicRepository.findAll());
     }
 
     @Override
     public ClinicDto findById (Long id){
+
         return clinicMapper.toClinicDto(clinicRepository.findById(id).orElse(null));
     }
 

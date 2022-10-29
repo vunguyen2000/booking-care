@@ -1,9 +1,6 @@
 package com.uit.bookingcare.domain.doctor.join;
 
-import com.uit.bookingcare.constant.enums.ECalendarShift;
-import com.uit.bookingcare.constant.enums.EPayment;
-import com.uit.bookingcare.constant.enums.EPosition;
-import com.uit.bookingcare.constant.enums.EPrice;
+import com.uit.bookingcare.constant.enums.*;
 import com.uit.bookingcare.domain.SqlEntity;
 import com.uit.bookingcare.domain.booking.Booking;
 import com.uit.bookingcare.domain.clinics.Clinic;
@@ -36,10 +33,18 @@ public class DoctorInfor extends SqlEntity {
     private EPrice price;
     @Enumerated(EnumType.STRING)
     private EPosition position;
+    @Enumerated(EnumType.STRING)
+    private EProvince province;
+
+    @Column(name = "description_html", columnDefinition = "TEXT")
+    private String descriptionHTML;
+    @Column(name = "description_markdown", columnDefinition = "TEXT")
+    private String descriptionMarkdown;
+
     @Convert(converter = ECalendarShiftConverter.class)
     private List<ECalendarShift> calendarShifts;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @MapsId
     @JoinColumn(name = "id")
     private User user;
@@ -49,21 +54,17 @@ public class DoctorInfor extends SqlEntity {
     private String count;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "clinicId")
+    @JoinColumn(name = "clinic_id")
     private Clinic clinic;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "specialtyId")
+    @JoinColumn(name = "specialty_id")
     private Specialty specialty;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "doctorInfor")
-    private Set<Booking> bookings = new HashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "doctorInfor")
     private Set<Schedule> schedules = new HashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "doctorInfor")
     private Set<Histories> histories = new HashSet<>();
-
 
 }

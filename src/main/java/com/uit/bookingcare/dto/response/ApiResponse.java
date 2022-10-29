@@ -46,6 +46,10 @@ public class ApiResponse {
     @Setter
     private String errMessage;
 
+    public ApiResponse() {
+        this(null);
+    }
+
     public ApiResponse(Object data) {
         this(null, data);
     }

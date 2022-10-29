@@ -22,12 +22,12 @@ public class SqlEntity implements Serializable {
 
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "createdAt")
+    @Column(name = "created_at")
     protected Date createdAt = new Date();
 
     @LastModifiedDate
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "updatedAt")
+    @Column(name = "updated_at")
     protected Date updatedAt = new Date();
 
 }

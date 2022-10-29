@@ -1,8 +1,9 @@
-package com.uit.bookingcare.dto.clinics;
+package com.uit.bookingcare.dto.specialty;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.uit.bookingcare.dto.BaseDto;
+import com.uit.bookingcare.dto.clinics.ClinicDto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,13 +13,9 @@ import java.util.Objects;
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ClinicDto extends BaseDto {
-
+public class SpecialtyDto extends BaseDto {
     private Long id;
-
     private String name;
-
-    private String address;
     private String descriptionHTML;
     private String descriptionMarkdown;
     private String image;
@@ -27,8 +24,8 @@ public class ClinicDto extends BaseDto {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ClinicDto clinicDto = (ClinicDto) o;
-        return Objects.equals(id, clinicDto.id);
+        SpecialtyDto specialtyDto = (SpecialtyDto) o;
+        return Objects.equals(id, specialtyDto.id);
     }
 
     @Override

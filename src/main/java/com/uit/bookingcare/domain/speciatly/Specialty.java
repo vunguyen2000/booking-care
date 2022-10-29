@@ -19,18 +19,19 @@ public class Specialty extends SqlEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String name;
+    @Column( columnDefinition = "TEXT")
     private String image;
 
-    @Column(name = "descriptionHTML", columnDefinition = "TEXT")
+    @Column(name = "description_html", columnDefinition = "TEXT")
     private String descriptionHTML;
-    @Column(name = "descriptionMarkdown", columnDefinition = "TEXT")
+    @Column(name = "description_markdown", columnDefinition = "TEXT")
     private String descriptionMarkdown;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "specialty")
     private List<DoctorInfor> doctorInfor = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "clinicId")
+    @JoinColumn(name = "clinic_id")
     private Clinic clinic;
 
 

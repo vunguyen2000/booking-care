@@ -15,24 +15,5 @@ import java.awt.*;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserDto {
 
-    private Long id;
 
-
-    @JsonProperty("first_name")
-    private String firstname;
-
-    @JsonProperty("last_name")
-    private String lastname;
-
-    private String email;
-
-    private String phone;
-
-    private FileCaption image;
-
-    public UserDto(Long id,  FileCaption image, String email) {
-        this.id = id;
-        this.email = email;
-        this.image = image;
-    }
 }

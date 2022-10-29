@@ -22,10 +22,11 @@ public class Clinic extends SqlEntity {
     private long id;
     private String name;
     private String address;
+    @Column( columnDefinition = "TEXT")
     private String image;
-    @Column(name = "descriptionHTML", columnDefinition = "TEXT")
+    @Column(name = "description_html", columnDefinition = "TEXT")
     private String descriptionHTML;
-    @Column(name = "descriptionMarkdown", columnDefinition = "TEXT")
+    @Column(name = "description_markdown", columnDefinition = "TEXT")
     private String descriptionMarkdown;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "clinic")

@@ -2,27 +2,57 @@ package com.uit.bookingcare.mapper.doctor;
 
 import com.uit.bookingcare.domain.clinics.Clinic;
 import com.uit.bookingcare.domain.doctor.join.DoctorInfor;
-import com.uit.bookingcare.domain.user.User;
-import com.uit.bookingcare.dto.clinics.ClinicDto;
 import com.uit.bookingcare.dto.doctor.DoctorInforDto;
+import com.uit.bookingcare.mapper.MapperBase;
+import com.uit.bookingcare.repository.clinic.ClinicRepository;
+import com.uit.bookingcare.repository.specialty.SpecialtyRepository;
+import com.uit.bookingcare.request.doctor.UpdateDoctorInforRequest;
 import org.mapstruct.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
 @Mapper(componentModel = "spring")
-public abstract class DoctorInforMapper {
+public abstract class DoctorInforMapper implements MapperBase {
 
-    @BeanMapping(ignoreByDefault = true)
-    @Named("toDoctorInforDtoList")
-    @Mapping(source = "id", target = "id")
-    @Mapping(source = "firstname", target = "firstname")
-    @Mapping(source = "lastname", target = "lastname")
-    public abstract DoctorInforDto toDoctorInforDto(User users);
+    @Autowired
+    private ClinicRepository clinicRepository;
 
-    @BeanMapping(ignoreByDefault = true)
-    @IterableMapping(qualifiedByName = "toDoctorInforDtoList")
-    public abstract List<DoctorInforDto> toDoctorInforDtoList(List<User> users);
+    @Autowired
+    private SpecialtyRepository specialtyRepository;
+
+    @Mapping(source = "user.firstName", target = "firstName")
+    @Mapping(source = "user.lastName", target = "lastName")
+    @Mapping(source = "user.address", target = "address")
+    @Mapping(source = "user.phonenumber", target = "phonenumber")
+    @Mapping(source = "user.email", target = "email")
+    @Mapping(source = "user.gender", target = "gender")
+    @Mapping(source = "user.role.id", target = "roleId")
+    @Mapping(source = "position", target = "positionId")
+    public abstract DoctorInforDto doctorInforDto(DoctorInfor doctorInfor);
+    public abstract List<DoctorInforDto> doctorInforDtoList(List<DoctorInfor> doctorInfors);
+
+    @Named("updateDoctorInfor")
+    @BeforeMapping
+    protected void updateDoctorInforBefore(UpdateDoctorInforRequest dto, @MappingTarget DoctorInfor entity) {
+        if (dto.getClinicId() != null){
+            clinicRepository.findById(dto.getClinicId()).ifPresent(entity::setClinic);
+        }
+
+        if (dto.getSpecialtyId() != null){
+            specialtyRepository.findById(dto.getSpecialtyId()).ifPresent(entity::setSpecialty);
+        }
+    }
+
+    @BeanMapping(qualifiedByName = "updateDoctorInfor", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "id", ignore = true)
+    @Mapping(source = "contentHTML", target = "descriptionHTML")
+    @Mapping(source = "contentMarkdown", target = "descriptionMarkdown")
+    @Mapping(source = "selectedPrice", target = "price")
+    @Mapping(source = "selectedPayment", target = "payment")
+    @Mapping(source = "selectedProvince", target = "province")
+    public abstract void updateDoctorInfor(UpdateDoctorInforRequest dto, @MappingTarget DoctorInfor entity);
 
 }

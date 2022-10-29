@@ -19,24 +19,22 @@ public class Booking extends SqlEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    @Column(name = "timeType")
+    @Column(name = "time_type")
     @Enumerated(EnumType.STRING)
     private ETimeType timeType;
     @Column(name = "token")
     private String token;
-    @Column(name = "statusId")
+    @Column(name = "status_id")
     @Enumerated(EnumType.STRING)
     private EStatus statusId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "doctorId")
-    private DoctorInfor doctorInfor;
+    private String date;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "patientId")
+    @JoinColumn(name = "patient_id")
     private Patient patient;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "scheduleId")
+    @JoinColumn(name = "schedule_id")
     private Schedule schedule;
 }

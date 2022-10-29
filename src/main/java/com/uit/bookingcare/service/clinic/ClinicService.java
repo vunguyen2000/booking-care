@@ -1,15 +1,16 @@
 package com.uit.bookingcare.service.clinic;
 
 import com.uit.bookingcare.dto.clinics.ClinicDto;
+import com.uit.bookingcare.request.clinic.CreateClinicRequest;
+import com.uit.bookingcare.request.clinic.UpdateClinicRequest;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface ClinicService {
 
-    List<ClinicDto> findAllByName(String name);
-
-    List<ClinicDto> findAllByNameOrAddress(String name, String address);
+    void save(CreateClinicRequest request);
+    void update(Long id, UpdateClinicRequest request);
+    List<ClinicDto> findAll();
 
     ClinicDto findById(Long id);
 }

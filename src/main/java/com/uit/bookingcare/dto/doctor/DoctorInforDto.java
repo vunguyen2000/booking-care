@@ -1,9 +1,10 @@
 package com.uit.bookingcare.dto.doctor;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.uit.bookingcare.domain.doctor.join.DoctorInfor;
-import com.uit.bookingcare.dto.clinics.ClinicDto;
+import com.uit.bookingcare.constant.enums.EGender;
+import com.uit.bookingcare.constant.enums.EPosition;
+import com.uit.bookingcare.constant.enums.ERoleType;
+import com.uit.bookingcare.dto.BaseDto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,14 +13,17 @@ import java.util.Objects;
 @Data
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class DoctorInforDto {
+public class DoctorInforDto extends BaseDto {
     private Long id;
 
-    @JsonProperty("firstname")
-    private String firstname;
-
-    @JsonProperty("lastname")
-    private String lastname;
+    private String firstName;
+    private String lastName;
+    private String address;
+    private String phonenumber;
+    private String email;
+    private EGender gender;
+    private ERoleType roleId;
+    private EPosition positionId;
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
