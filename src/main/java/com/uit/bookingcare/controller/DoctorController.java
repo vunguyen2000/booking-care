@@ -2,9 +2,7 @@ package com.uit.bookingcare.controller;
 
 
 import com.uit.bookingcare.dto.response.ApiResponse;
-import com.uit.bookingcare.request.clinic.UpdateClinicRequest;
 import com.uit.bookingcare.request.doctor.UpdateDoctorInforRequest;
-import com.uit.bookingcare.service.clinic.ClinicService;
 import com.uit.bookingcare.service.doctorInfor.DoctorService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Slf4j
 @RestController
@@ -49,11 +46,17 @@ public class DoctorController {
                 .body(new ApiResponse());
     }
 
-    @GetMapping(value = "/get-schedule-doctor-by-date")
+        @GetMapping(value = "/get-schedule-doctor-by-date")
     public ResponseEntity<?> getScheduleDoctorByDate(@RequestParam(value = "doctorId") Long doctorId,
                                                      @RequestParam(value = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new ApiResponse(doctorService.getScheduleDoctorByDate(doctorId,date)));
+    }
+
+    @GetMapping(value = "/get-extra-infor-doctor-by-id")
+    public ResponseEntity<?> getExtraDoctorById(@RequestParam(value = "doctorId", required = false) Long id) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new ApiResponse(doctorService.getExtraDoctorById(id)));
     }
 
 }

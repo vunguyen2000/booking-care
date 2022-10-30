@@ -8,6 +8,7 @@ import com.uit.bookingcare.domain.schedule.Schedule;
 import com.uit.bookingcare.domain.speciatly.Specialty;
 import com.uit.bookingcare.domain.user.User;
 import com.uit.bookingcare.utils.ECalendarShiftConverter;
+import io.swagger.models.auth.In;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -50,13 +51,13 @@ public class DoctorInfor extends SqlEntity {
     @Column(columnDefinition = "TEXT")
     private String note;
 
-    private String count;
+    private Integer count;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "clinic_id")
     private Clinic clinic;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "specialty_id")
     private Specialty specialty;
 

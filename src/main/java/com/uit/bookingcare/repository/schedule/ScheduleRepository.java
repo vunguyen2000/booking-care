@@ -13,4 +13,5 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
     @Query(value = "SELECT s.* FROM doctor_infor d JOIN schedule s ON d.id = s.doctor_id " +
             " WHERE d.id = :doctorId AND s.date = :date", nativeQuery = true)
     List<Schedule> findAllByDoctorIdAndScheduleDate(Long doctorId, LocalDate date);
+
 }

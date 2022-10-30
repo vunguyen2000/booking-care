@@ -1,10 +1,12 @@
 package com.uit.bookingcare.service.doctorInfor.impl;
 
 import com.uit.bookingcare.domain.doctor.join.DoctorInfor;
+import com.uit.bookingcare.dto.doctor.DoctorExtraDto;
 import com.uit.bookingcare.dto.doctor.DoctorInforDto;
 import com.uit.bookingcare.dto.schedule.DoctorScheduleDto;
 import com.uit.bookingcare.mapper.doctor.DoctorInforMapper;
 import com.uit.bookingcare.mapper.schedule.ScheduleMapper;
+import com.uit.bookingcare.repository.clinic.ClinicRepository;
 import com.uit.bookingcare.repository.doctorinfor.DoctorInforRepository;
 import com.uit.bookingcare.repository.schedule.ScheduleRepository;
 import com.uit.bookingcare.request.doctor.UpdateDoctorInforRequest;
@@ -32,6 +34,8 @@ public class DoctorInforServiceImpl implements DoctorService {
     private final ScheduleMapper scheduleMapper;
 
     private final ScheduleRepository scheduleRepository;
+
+    private final ClinicRepository clinicRepository;
 
 
     @Override
@@ -73,6 +77,11 @@ public class DoctorInforServiceImpl implements DoctorService {
         }
         doctorInforMapper.updateDoctorInfor(request, oldDoctor);
         doctorInforReposioty.save(oldDoctor);
+    }
+
+    @Override
+    public DoctorExtraDto getExtraDoctorById(Long doctorId) {
+        return doctorInforMapper.toExtraDoctorInforDto(doctorInforReposioty.findById(doctorId).orElse(null));
     }
 
 }

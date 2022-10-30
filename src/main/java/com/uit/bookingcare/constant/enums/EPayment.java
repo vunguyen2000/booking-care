@@ -4,14 +4,18 @@ import lombok.Getter;
 
 public enum EPayment {
 
-    CASH("Tiền mặt"),
-    CREDIT_CARD("Thẻ ATM"),
-    ALL_PAYMENT_METHOD("Tất cả");
+    PAY1("Cash","Tiền mặt"),
+    PAY2("Credit card","Thẻ ATM"),
+    PAY3("All payment method","Tất cả");
 
     @Getter
-    private String value;
+    private final String valueEn;
 
-    EPayment(String value) {
-        this.value = value;
+    @Getter
+    private final String valueVi;
+
+    EPayment(String valueEn, String valueVi) {
+        this.valueEn = valueEn;
+        this.valueVi = valueVi;
     }
 }

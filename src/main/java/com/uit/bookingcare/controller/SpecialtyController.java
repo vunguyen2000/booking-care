@@ -1,12 +1,8 @@
 package com.uit.bookingcare.controller;
 
-import com.uit.bookingcare.domain.speciatly.Specialty;
 import com.uit.bookingcare.dto.response.ApiResponse;
-import com.uit.bookingcare.request.clinic.CreateClinicRequest;
-import com.uit.bookingcare.request.clinic.UpdateClinicRequest;
 import com.uit.bookingcare.request.specialty.CreateSpecialtyRequest;
 import com.uit.bookingcare.request.specialty.UpdateSpecialtyRequest;
-import com.uit.bookingcare.service.clinic.ClinicService;
 import com.uit.bookingcare.service.specialty.SpecialtyService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
