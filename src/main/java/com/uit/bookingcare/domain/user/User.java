@@ -64,36 +64,8 @@ public class User extends SqlEntity {
             orphanRemoval = true,
             fetch = FetchType.LAZY
     )
-    private Patient patient;
-
-    public void setPatient(Patient patient) {
-        if (patient == null) {
-            if (this.patient != null) {
-                this.patient.setUser(null);
-            }
-        } else {
-            doctorInfor.setUser(this);
-        }
-        this.doctorInfor = doctorInfor;
-    }
-    @OneToOne(
-            mappedBy = "user",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true,
-            fetch = FetchType.LAZY
-    )
     private DoctorInfor doctorInfor;
 
-    public void setDoctor(DoctorInfor doctorInfor) {
-        if (patient == null) {
-            if (this.doctorInfor != null) {
-                this.doctorInfor.setUser(null);
-            }
-        } else {
-            patient.setUser(this);
-        }
-        this.patient = patient;
-    }
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), id);

@@ -3,6 +3,7 @@ package com.uit.bookingcare.mapper.doctor;
 import com.uit.bookingcare.domain.clinics.Clinic;
 import com.uit.bookingcare.domain.doctor.join.DoctorInfor;
 import com.uit.bookingcare.dto.doctor.DoctorInforDto;
+import com.uit.bookingcare.dto.schedule.DoctorScheduleDto;
 import com.uit.bookingcare.mapper.MapperBase;
 import com.uit.bookingcare.repository.clinic.ClinicRepository;
 import com.uit.bookingcare.repository.specialty.SpecialtyRepository;
@@ -54,5 +55,8 @@ public abstract class DoctorInforMapper implements MapperBase {
     @Mapping(source = "selectedPayment", target = "payment")
     @Mapping(source = "selectedProvince", target = "province")
     public abstract void updateDoctorInfor(UpdateDoctorInforRequest dto, @MappingTarget DoctorInfor entity);
+
+
+
 
 }

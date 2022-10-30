@@ -1,9 +1,7 @@
 package com.uit.bookingcare.domain.booking;
 
 import com.uit.bookingcare.constant.enums.EStatus;
-import com.uit.bookingcare.constant.enums.ETimeType;
 import com.uit.bookingcare.domain.SqlEntity;
-import com.uit.bookingcare.domain.doctor.join.DoctorInfor;
 import com.uit.bookingcare.domain.patient.Patient;
 import com.uit.bookingcare.domain.schedule.Schedule;
 import lombok.AllArgsConstructor;
@@ -19,9 +17,6 @@ public class Booking extends SqlEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    @Column(name = "time_type")
-    @Enumerated(EnumType.STRING)
-    private ETimeType timeType;
     @Column(name = "token")
     private String token;
     @Column(name = "status_id")

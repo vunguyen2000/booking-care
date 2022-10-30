@@ -2,7 +2,6 @@ package com.uit.bookingcare.domain.doctor.join;
 
 import com.uit.bookingcare.constant.enums.*;
 import com.uit.bookingcare.domain.SqlEntity;
-import com.uit.bookingcare.domain.booking.Booking;
 import com.uit.bookingcare.domain.clinics.Clinic;
 import com.uit.bookingcare.domain.history.Histories;
 import com.uit.bookingcare.domain.schedule.Schedule;
@@ -42,7 +41,7 @@ public class DoctorInfor extends SqlEntity {
     private String descriptionMarkdown;
 
     @Convert(converter = ECalendarShiftConverter.class)
-    private List<ECalendarShift> calendarShifts;
+    private List<ETimeType> calendarShifts;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @MapsId

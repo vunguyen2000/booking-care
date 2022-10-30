@@ -19,11 +19,6 @@ public class Patient {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @MapsId
-    @JoinColumn(name = "id")
-    private User user;
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "patient")
     private List<Histories> histories = new ArrayList<>();
 

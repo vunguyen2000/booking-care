@@ -1,5 +1,6 @@
 package com.uit.bookingcare.domain.schedule;
 
+import com.uit.bookingcare.constant.enums.ETimeType;
 import com.uit.bookingcare.domain.SqlEntity;
 import com.uit.bookingcare.domain.booking.Booking;
 import com.uit.bookingcare.domain.doctor.join.DoctorInfor;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Time;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -23,8 +25,9 @@ public class Schedule extends SqlEntity {
     private long id;
     private long currentnumber;
     private long maxNumber;
-    private Date date;
-    private Time timeType;
+    private LocalDate date;
+    @Enumerated(EnumType.STRING)
+    private ETimeType timeType;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "doctor_id")
