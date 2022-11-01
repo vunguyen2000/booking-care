@@ -65,8 +65,18 @@ public class DoctorController {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new ApiResponse(doctorService.getListPatientDoctorByDate(doctorId,date)));
     }
+        @GetMapping(value = "/get-profile-doctor-by-id")
+    public ResponseEntity<?> getProfileDoctorById(@RequestParam(value = "doctorId", required = false) Long doctorId) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new ApiResponse(doctorService.getProfileDoctorById(doctorId)));
+    }
+//    @GetMapping(value = "/get-all-users")
+//    public ResponseEntity<?> getDoctorById(@RequestParam(value = "id", required = false) Long id) {
+//        return ResponseEntity.status(HttpStatus.OK)
+//                .body(new ApiResponse(doctorService.getDoctorById(id)));
+//    }
 //    @PostMapping(value = "/bulk-create-schedule")
-//    public ResponseEntity<?> editDoctor(@RequestBody UpdateDoctorInforRequest request) {
+//    public ResponseEntity<?> bulkCreateSchedule(@RequestBody UpdateDoctorInforRequest request) {
 //        doctorService.save(request);
 //        return ResponseEntity.status(HttpStatus.OK)
 //                .body(new ApiResponse());

@@ -88,7 +88,18 @@ public class DoctorInforServiceImpl implements DoctorService {
         return doctorInforMapper.toExtraDoctorInforDto(doctorInforReposioty.findById(doctorId).orElse(null));
     }
     @Override
-    public  List<DoctorPatientBookingDto> getListPatientDoctorByDate(Long doctorId, LocalDate date) {
+    public List<DoctorPatientBookingDto> getListPatientDoctorByDate(Long doctorId, LocalDate date) {
+        DoctorInfor doctorInfor = doctorInforReposioty.findById(doctorId).orElse(null);
+        if(doctorInfor ==null){
+            return null;
+        }
         return scheduleMapper.toDoctorPatientBookingDtoList(scheduleRepository.findAllByDoctorIdAndPatientDate(doctorId, date));
     }
+
+    @Override
+    public DetailDoctorDataDto getProfileDoctorById(Long doctorId) {
+        return userMapper.detailDoctorDataDto(userRepository.findById(doctorId).orElse(null));
+    }
+
+
 }

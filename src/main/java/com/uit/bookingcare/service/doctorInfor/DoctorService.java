@@ -1,9 +1,9 @@
 package com.uit.bookingcare.service.doctorInfor;
 
 import com.uit.bookingcare.dto.doctor.DetailDoctorDataDto;
-import com.uit.bookingcare.dto.schedule.DoctorPatientBookingDto;
 import com.uit.bookingcare.dto.doctor.DoctorExtraDto;
 import com.uit.bookingcare.dto.doctor.DoctorInforDto;
+import com.uit.bookingcare.dto.schedule.DoctorPatientBookingDto;
 import com.uit.bookingcare.dto.schedule.DoctorScheduleDto;
 import com.uit.bookingcare.request.doctor.UpdateDoctorInforRequest;
 
@@ -15,7 +15,7 @@ public interface DoctorService {
 
     List<DoctorInforDto> getTopDoctor(Integer limit);
 
-     DetailDoctorDataDto getDetailDoctorById(Long id);
+    DetailDoctorDataDto getDetailDoctorById(Long id);
 
     List<DoctorScheduleDto> getScheduleDoctorByDate(Long doctorId, LocalDate date);
 
@@ -24,4 +24,7 @@ public interface DoctorService {
     DoctorExtraDto getExtraDoctorById(Long doctorId);
 
     List<DoctorPatientBookingDto> getListPatientDoctorByDate(Long doctorId, LocalDate date);
+    DetailDoctorDataDto getProfileDoctorById(Long doctorId);
+
+
 }

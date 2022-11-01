@@ -4,10 +4,14 @@ import com.uit.bookingcare.constant.enums.EPosition;
 import com.uit.bookingcare.domain.user.User;
 import com.uit.bookingcare.dto.doctor.DetailDoctorDataDto;
 import com.uit.bookingcare.dto.doctor.PositionDataDto;
+import com.uit.bookingcare.dto.user.UserDto;
 import com.uit.bookingcare.mapper.MapperBase;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.Optional;
 
 @Component
 @Mapper(componentModel = "spring")
@@ -37,5 +41,13 @@ public abstract class UserMapper implements MapperBase {
     @Mapping(source = "user.doctorInfor.position", target = "positionId")
     public abstract DetailDoctorDataDto detailDoctorDataDto(User user);
 
+
+
+    @BeanMapping(qualifiedByName = "userDto", ignoreByDefault = false,
+            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(source = "user.role.id", target = "roleId")
+    @Mapping(source = "user.doctorInfor.position", target = "positionId")
+    public abstract UserDto userDto(User user);
+    public abstract List<UserDto> userDtoList(List<User> users);
 
 }

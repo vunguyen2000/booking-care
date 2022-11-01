@@ -4,6 +4,7 @@ import com.uit.bookingcare.constant.enums.EGender;
 import com.uit.bookingcare.constant.enums.EStatus;
 import com.uit.bookingcare.constant.enums.ETimeType;
 import com.uit.bookingcare.domain.booking.Booking;
+import com.uit.bookingcare.domain.patient.Patient;
 import com.uit.bookingcare.domain.schedule.Schedule;
 import com.uit.bookingcare.domain.user.User;
 import com.uit.bookingcare.dto.patient.GenderDataDto;
@@ -14,12 +15,13 @@ import com.uit.bookingcare.dto.schedule.DoctorScheduleDto;
 import com.uit.bookingcare.dto.schedule.TimeTypeDataDto;
 import com.uit.bookingcare.mapper.MapperBase;
 import com.uit.bookingcare.repository.booking.BookingRepository;
+import com.uit.bookingcare.repository.patient.PatientRepository;
 import com.uit.bookingcare.repository.user.UserRepository;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.util.*;
 
 @Component
 @Mapper(componentModel = "spring")
@@ -29,6 +31,8 @@ public abstract class ScheduleMapper implements MapperBase {
     private UserRepository userRepository;
     @Autowired
     private BookingRepository bookingRepository;
+    @Autowired
+    private PatientRepository patientRepository;
     @Named("toDoctorScheduleDto")
     @BeforeMapping
     protected void toDoctorScheduleDto(Schedule schedule, @MappingTarget DoctorScheduleDto dto) {
