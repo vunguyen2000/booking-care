@@ -8,10 +8,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PositionDataDto {
-    private Integer valueEn;
+    private String valueEn;
     private String valueVi;
 
-    public PositionDataDto(Integer valueEn, String valueVi) {
+    public PositionDataDto(String valueEn, String valueVi) {
         this.valueEn = valueEn;
         this.valueVi = valueVi;
     }

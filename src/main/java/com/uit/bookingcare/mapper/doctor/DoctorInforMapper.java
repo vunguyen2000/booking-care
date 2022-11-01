@@ -78,7 +78,6 @@ public abstract class DoctorInforMapper implements MapperBase {
             specialtyRepository.findById(dto.getSpecialtyId()).ifPresent(entity::setSpecialty);
         }
     }
-
     @BeanMapping(qualifiedByName = "updateDoctorInfor", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "id", ignore = true)
     @Mapping(source = "contentHTML", target = "contentHTML")
@@ -88,4 +87,5 @@ public abstract class DoctorInforMapper implements MapperBase {
     @Mapping(source = "selectedPayment", target = "payment")
     @Mapping(source = "selectedProvince", target = "province")
     public abstract void updateDoctorInfor(UpdateDoctorInforRequest dto, @MappingTarget DoctorInfor entity);
+
 }

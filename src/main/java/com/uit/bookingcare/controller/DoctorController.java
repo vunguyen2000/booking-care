@@ -34,9 +34,9 @@ public class DoctorController {
     }
 
     @GetMapping(value = "/get-detail-doctor-by-id")
-    public ResponseEntity<?> getDoctorById(@RequestParam(value = "id", required = false) Long id) {
+    public ResponseEntity<?> getDetailDoctorById(@RequestParam(value = "id", required = false) Long id) {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(new ApiResponse(doctorService.getDoctorById(id)));
+                .body(new ApiResponse(doctorService.getDetailDoctorById(id)));
     }
 
     @PostMapping(value = "/save-infor-doctor")
@@ -63,7 +63,7 @@ public class DoctorController {
     public ResponseEntity<?> getPatientDoctorByDate(@RequestParam(value = "doctorId") Long doctorId,
                                                      @RequestParam(value = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(new ApiResponse(doctorService.getPatientDoctorByDate(doctorId,date)));
+                .body(new ApiResponse(doctorService.getListPatientDoctorByDate(doctorId,date)));
     }
 //    @PostMapping(value = "/bulk-create-schedule")
 //    public ResponseEntity<?> editDoctor(@RequestBody UpdateDoctorInforRequest request) {

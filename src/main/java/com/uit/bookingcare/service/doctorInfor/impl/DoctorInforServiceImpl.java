@@ -1,14 +1,17 @@
 package com.uit.bookingcare.service.doctorInfor.impl;
 
 import com.uit.bookingcare.domain.doctor.DoctorInfor;
+import com.uit.bookingcare.dto.doctor.DetailDoctorDataDto;
 import com.uit.bookingcare.dto.doctor.DoctorExtraDto;
 import com.uit.bookingcare.dto.doctor.DoctorInforDto;
 import com.uit.bookingcare.dto.schedule.DoctorPatientBookingDto;
 import com.uit.bookingcare.dto.schedule.DoctorScheduleDto;
 import com.uit.bookingcare.mapper.doctor.DoctorInforMapper;
+import com.uit.bookingcare.mapper.doctor.UserMapper;
 import com.uit.bookingcare.mapper.schedule.ScheduleMapper;
 import com.uit.bookingcare.repository.doctorinfor.DoctorInforRepository;
 import com.uit.bookingcare.repository.schedule.ScheduleRepository;
+import com.uit.bookingcare.repository.user.UserRepository;
 import com.uit.bookingcare.request.doctor.UpdateDoctorInforRequest;
 import com.uit.bookingcare.service.doctorInfor.DoctorService;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +37,10 @@ public class DoctorInforServiceImpl implements DoctorService {
 
     private final ScheduleRepository scheduleRepository;
 
+    private final UserRepository userRepository;
+
+    private final UserMapper userMapper;
+
 
     @Override
     public List<DoctorInforDto> findAll() {
@@ -52,9 +59,9 @@ public class DoctorInforServiceImpl implements DoctorService {
     }
 
     @Override
-    public DoctorInforDto getDoctorById(Long id) {
+    public DetailDoctorDataDto getDetailDoctorById(Long id) {
 
-        return doctorInforMapper.doctorInforDto(doctorInforReposioty.findById(id).orElse(null));
+        return userMapper.detailDoctorDataDto(userRepository.findById(id).orElse(null));
     }
 
     @Override
@@ -81,7 +88,7 @@ public class DoctorInforServiceImpl implements DoctorService {
         return doctorInforMapper.toExtraDoctorInforDto(doctorInforReposioty.findById(doctorId).orElse(null));
     }
     @Override
-    public  List<DoctorPatientBookingDto> getPatientDoctorByDate(Long doctorId, LocalDate date) {
+    public  List<DoctorPatientBookingDto> getListPatientDoctorByDate(Long doctorId, LocalDate date) {
         return scheduleMapper.toDoctorPatientBookingDtoList(scheduleRepository.findAllByDoctorIdAndPatientDate(doctorId, date));
     }
 }

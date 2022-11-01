@@ -25,6 +25,7 @@ public class DetailDoctorDataDto {
     private ERoleType roleId;
     private MarkdownDataDto Markdown;
     private PositionDataDto positionData;
+    private EPosition positionId;
     @JsonProperty(value = "Doctor_Infor")
     private DoctorExtraDto doctorInfor;
 

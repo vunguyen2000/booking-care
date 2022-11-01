@@ -13,6 +13,7 @@ import com.uit.bookingcare.dto.patient.PatientDataDto;
 import com.uit.bookingcare.dto.schedule.DoctorScheduleDto;
 import com.uit.bookingcare.dto.schedule.TimeTypeDataDto;
 import com.uit.bookingcare.mapper.MapperBase;
+import com.uit.bookingcare.repository.booking.BookingRepository;
 import com.uit.bookingcare.repository.user.UserRepository;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,8 @@ public abstract class ScheduleMapper implements MapperBase {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private BookingRepository bookingRepository;
     @Named("toDoctorScheduleDto")
     @BeforeMapping
     protected void toDoctorScheduleDto(Schedule schedule, @MappingTarget DoctorScheduleDto dto) {
@@ -47,11 +50,17 @@ public abstract class ScheduleMapper implements MapperBase {
     protected void toDoctorPatientBookingDto(Schedule schedule, @MappingTarget DoctorPatientBookingDto dto) {
         ETimeType timeType = schedule.getTimeType();
         User user = userRepository.findById(schedule.getPatient().getId()).orElse(null);
+        Booking booking = bookingRepository.findById(schedule.getId()).orElse(null);
+        if(booking!=null){
+            dto.setStatusId(booking.getStatusId());
+            dto.setToken(booking.getToken());
+        }
         dto.setTimeTypeDataPatient(new TimeTypeDataDto(timeType.getValueEn(), timeType.getValueVi()));
         if (user != null){
             EGender gender = user.getGender();
             dto.setPatientData(new PatientDataDto(user.getEmail(),user.getFirstName(),user.getLastName(),user.getAddress(),user.getGender(), new GenderDataDto(gender.getValueEn(),gender.getValueVi())));
         }
+
     }
 
     @BeanMapping(qualifiedByName = "toDoctorPatientBookingDto")

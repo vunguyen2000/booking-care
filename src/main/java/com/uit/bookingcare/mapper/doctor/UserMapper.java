@@ -1,7 +1,9 @@
 package com.uit.bookingcare.mapper.doctor;
 
+import com.uit.bookingcare.constant.enums.EPosition;
 import com.uit.bookingcare.domain.user.User;
 import com.uit.bookingcare.dto.doctor.DetailDoctorDataDto;
+import com.uit.bookingcare.dto.doctor.PositionDataDto;
 import com.uit.bookingcare.mapper.MapperBase;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,21 +20,22 @@ public abstract class UserMapper implements MapperBase {
     @Named("detailDoctorDataDto")
     @BeforeMapping
     protected void detailDoctorDataDto(User user, @MappingTarget DetailDoctorDataDto dto) {
-       dto.setDoctorInfor(doctorInforMapper.toExtraDoctorInforDto(user.getDoctorInfor()));
+        EPosition position = user.getDoctorInfor().getPosition();
+        dto.setPositionData(new PositionDataDto(position.getValueEn(), position.getValueVi()));
+        dto.setDoctorInfor(doctorInforMapper.toExtraDoctorInforDto(user.getDoctorInfor()));
     }
-    @BeanMapping(qualifiedByName = "detailDoctorDataDto" ,ignoreByDefault = true,
-            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-//    @Mapping(source = "specialty.id", target = "specialtyId")
-//    @Mapping(source = "clinic.id", target = "clinicId")
-//    @Mapping(source = "price", target = "priceId")
-//    @Mapping(source = "province", target = "provinceId")
-//    @Mapping(source = "payment", target = "paymentId")
-//    @Mapping(source = "clinic.address", target = "addressClinic")
-//    @Mapping(source = "clinic.name", target = "nameClinic")
-//    @Mapping(source = "count", target = "count")
-//    @Mapping(source = "note", target = "note")
-//    @Mapping(source = "createdAt", target = "createdAt")
 
+    @BeanMapping(qualifiedByName = "detailDoctorDataDto", ignoreByDefault = true,
+            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(source = "user.firstName", target = "firstName")
+    @Mapping(source = "user.lastName", target = "lastName")
+    @Mapping(source = "user.address", target = "address")
+    @Mapping(source = "user.phonenumber", target = "phonenumber")
+    @Mapping(source = "user.email", target = "email")
+    @Mapping(source = "user.gender", target = "gender")
+    @Mapping(source = "user.role.id", target = "roleId")
+    @Mapping(source = "user.doctorInfor.position", target = "positionId")
     public abstract DetailDoctorDataDto detailDoctorDataDto(User user);
+
 
 }
