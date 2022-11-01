@@ -6,11 +6,13 @@ import com.uit.bookingcare.domain.patient.Patient;
 import com.uit.bookingcare.domain.schedule.Schedule;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name ="booking")
 public class Booking extends SqlEntity {

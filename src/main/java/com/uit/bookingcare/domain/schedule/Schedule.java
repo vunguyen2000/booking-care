@@ -3,15 +3,13 @@ package com.uit.bookingcare.domain.schedule;
 import com.uit.bookingcare.constant.enums.ETimeType;
 import com.uit.bookingcare.domain.SqlEntity;
 import com.uit.bookingcare.domain.booking.Booking;
-import com.uit.bookingcare.domain.doctor.join.DoctorInfor;
+import com.uit.bookingcare.domain.doctor.DoctorInfor;
 import com.uit.bookingcare.domain.patient.Patient;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.sql.Time;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 

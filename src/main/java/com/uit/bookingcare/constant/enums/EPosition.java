@@ -3,16 +3,20 @@ package com.uit.bookingcare.constant.enums;
 import lombok.Getter;
 
 public enum EPosition {
-    NONE("Bác sĩ"),
-    MASTER("Thạc sĩ"),
-    DOCTOR("Tiến sĩ"),
-    ASSOCICATE_PROFESSOR("Phó giáo sư"),
-    PROFESSOR("Giáo sư");
+    P0("None","Bác sĩ"),
+    P1("Master","Thạc sĩ"),
+    P2("Doctor","Tiến sĩ"),
+    P3("Asocicate Professor","Phó giáo sư"),
+    PROFESSOR("Professor","Giáo sư");
 
     @Getter
-    private String value;
+    private final String valueEn;
 
-    EPosition(String value) {
-        this.value = value;
+    @Getter
+    private final String valueVi;
+
+    EPosition(String valueEn, String valueVi) {
+        this.valueEn = valueEn;
+        this.valueVi = valueVi;
     }
 }

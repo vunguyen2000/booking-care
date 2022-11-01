@@ -3,10 +3,10 @@ package com.uit.bookingcare.constant.enums;
 import lombok.Getter;
 
 public enum EStatus {
-    NEW("Lịch hẹn mới"),
-    CONFIRMED("Đã xác nhận"),
-    DONE("Đã khám xong"),
-    CACNEL("Đã hủy");
+    S1("S1"),
+    S2("S2"),
+    S3("S3"),
+    S4("S4");
     @Getter
     private String value;
 

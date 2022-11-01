@@ -1,18 +1,19 @@
 package com.uit.bookingcare.mapper.schedule;
 
+import com.uit.bookingcare.constant.enums.EGender;
+import com.uit.bookingcare.constant.enums.EStatus;
 import com.uit.bookingcare.constant.enums.ETimeType;
-import com.uit.bookingcare.domain.doctor.join.DoctorInfor;
+import com.uit.bookingcare.domain.booking.Booking;
 import com.uit.bookingcare.domain.schedule.Schedule;
 import com.uit.bookingcare.domain.user.User;
+import com.uit.bookingcare.dto.patient.GenderDataDto;
+import com.uit.bookingcare.dto.schedule.DoctorPatientBookingDto;
 import com.uit.bookingcare.dto.doctor.DoctorDataDto;
-import com.uit.bookingcare.dto.doctor.DoctorInforDto;
+import com.uit.bookingcare.dto.patient.PatientDataDto;
 import com.uit.bookingcare.dto.schedule.DoctorScheduleDto;
 import com.uit.bookingcare.dto.schedule.TimeTypeDataDto;
 import com.uit.bookingcare.mapper.MapperBase;
-import com.uit.bookingcare.repository.clinic.ClinicRepository;
-import com.uit.bookingcare.repository.specialty.SpecialtyRepository;
 import com.uit.bookingcare.repository.user.UserRepository;
-import com.uit.bookingcare.request.doctor.UpdateDoctorInforRequest;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -41,5 +42,23 @@ public abstract class ScheduleMapper implements MapperBase {
     public abstract DoctorScheduleDto toDoctorScheduleDto(Schedule schedule);
 
     public abstract List<DoctorScheduleDto> toDoctorScheduleDtoList(List<Schedule> schedules);
+    @Named("toDoctorPatientBookingDto")
+    @BeforeMapping
+    protected void toDoctorPatientBookingDto(Schedule schedule, @MappingTarget DoctorPatientBookingDto dto) {
+        ETimeType timeType = schedule.getTimeType();
+        User user = userRepository.findById(schedule.getPatient().getId()).orElse(null);
+        dto.setTimeTypeDataPatient(new TimeTypeDataDto(timeType.getValueEn(), timeType.getValueVi()));
+        if (user != null){
+            EGender gender = user.getGender();
+            dto.setPatientData(new PatientDataDto(user.getEmail(),user.getFirstName(),user.getLastName(),user.getAddress(),user.getGender(), new GenderDataDto(gender.getValueEn(),gender.getValueVi())));
+        }
+    }
+
+    @BeanMapping(qualifiedByName = "toDoctorPatientBookingDto")
+    @Mapping(source = "patient.id", target = "patientId")
+    @Mapping(source = "doctorInfor.id", target = "doctorId")
+    public abstract DoctorPatientBookingDto toDoctorPatientBookingDto(Schedule schedule);
+
+    public abstract List<DoctorPatientBookingDto> toDoctorPatientBookingDtoList(List<Schedule> schedules);
 
 }

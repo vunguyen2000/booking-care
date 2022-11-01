@@ -24,4 +24,5 @@ public class BaseDto {
     @JsonProperty("updated_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
+
 }

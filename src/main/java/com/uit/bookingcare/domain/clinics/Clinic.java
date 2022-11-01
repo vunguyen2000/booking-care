@@ -1,7 +1,7 @@
 package com.uit.bookingcare.domain.clinics;
 
 import com.uit.bookingcare.domain.SqlEntity;
-import com.uit.bookingcare.domain.doctor.join.DoctorInfor;
+import com.uit.bookingcare.domain.doctor.DoctorInfor;
 import com.uit.bookingcare.domain.speciatly.Specialty;
 import lombok.AllArgsConstructor;
 import lombok.Data;

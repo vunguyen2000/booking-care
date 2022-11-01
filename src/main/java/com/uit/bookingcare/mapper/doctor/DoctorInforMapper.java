@@ -3,15 +3,8 @@ package com.uit.bookingcare.mapper.doctor;
 import com.uit.bookingcare.constant.enums.EPayment;
 import com.uit.bookingcare.constant.enums.EPrice;
 import com.uit.bookingcare.constant.enums.EProvince;
-import com.uit.bookingcare.constant.enums.ETimeType;
-import com.uit.bookingcare.domain.clinics.Clinic;
-import com.uit.bookingcare.domain.doctor.join.DoctorInfor;
-import com.uit.bookingcare.domain.schedule.Schedule;
-import com.uit.bookingcare.domain.speciatly.Specialty;
-import com.uit.bookingcare.domain.user.User;
+import com.uit.bookingcare.domain.doctor.DoctorInfor;
 import com.uit.bookingcare.dto.doctor.*;
-import com.uit.bookingcare.dto.schedule.DoctorScheduleDto;
-import com.uit.bookingcare.dto.schedule.TimeTypeDataDto;
 import com.uit.bookingcare.mapper.MapperBase;
 import com.uit.bookingcare.repository.clinic.ClinicRepository;
 import com.uit.bookingcare.repository.doctorinfor.DoctorInforRepository;
@@ -23,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Optional;
 
 @Component
 @Mapper(componentModel = "spring")
@@ -62,7 +54,7 @@ public abstract class DoctorInforMapper implements MapperBase {
         dto.setPaymentTypeData(new PaymentTypeDataDto(payment.getValueEn(), payment.getValueVi()));
         dto.setProvinceTypeData(new ProvinceTypeDataDto(province.getValueEn(), province.getValueVi()));
     }
-    @BeanMapping(qualifiedByName = "toExtraDoctorInforDto" ,ignoreByDefault = true,
+    @BeanMapping(qualifiedByName = "toExtraDoctorInforDto" ,
             nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(source = "specialty.id", target = "specialtyId")
     @Mapping(source = "clinic.id", target = "clinicId")
@@ -71,6 +63,8 @@ public abstract class DoctorInforMapper implements MapperBase {
     @Mapping(source = "payment", target = "paymentId")
     @Mapping(source = "clinic.address", target = "addressClinic")
     @Mapping(source = "clinic.name", target = "nameClinic")
+    @Mapping(source = "count", target = "count")
+    @Mapping(source = "note", target = "note")
     public abstract DoctorExtraDto toExtraDoctorInforDto(DoctorInfor doctorInfor);
 
     @Named("updateDoctorInfor")
@@ -87,8 +81,9 @@ public abstract class DoctorInforMapper implements MapperBase {
 
     @BeanMapping(qualifiedByName = "updateDoctorInfor", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "id", ignore = true)
-    @Mapping(source = "contentHTML", target = "descriptionHTML")
-    @Mapping(source = "contentMarkdown", target = "descriptionMarkdown")
+    @Mapping(source = "contentHTML", target = "contentHTML")
+    @Mapping(source = "contentMarkdown", target = "contentMarkdown")
+    @Mapping(source = "description", target = "description")
     @Mapping(source = "selectedPrice", target = "price")
     @Mapping(source = "selectedPayment", target = "payment")
     @Mapping(source = "selectedProvince", target = "province")

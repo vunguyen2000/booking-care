@@ -46,7 +46,7 @@ public class DoctorController {
                 .body(new ApiResponse());
     }
 
-        @GetMapping(value = "/get-schedule-doctor-by-date")
+    @GetMapping(value = "/get-schedule-doctor-by-date")
     public ResponseEntity<?> getScheduleDoctorByDate(@RequestParam(value = "doctorId") Long doctorId,
                                                      @RequestParam(value = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         return ResponseEntity.status(HttpStatus.OK)
@@ -54,9 +54,22 @@ public class DoctorController {
     }
 
     @GetMapping(value = "/get-extra-infor-doctor-by-id")
-    public ResponseEntity<?> getExtraDoctorById(@RequestParam(value = "doctorId", required = false) Long id) {
+        public ResponseEntity<?> getExtraDoctorById(@RequestParam(value = "doctorId", required = false) Long id) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new ApiResponse(doctorService.getExtraDoctorById(id)));
     }
+
+    @GetMapping(value = "/get-list-patient-for-doctor")
+    public ResponseEntity<?> getPatientDoctorByDate(@RequestParam(value = "doctorId") Long doctorId,
+                                                     @RequestParam(value = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new ApiResponse(doctorService.getPatientDoctorByDate(doctorId,date)));
+    }
+//    @PostMapping(value = "/bulk-create-schedule")
+//    public ResponseEntity<?> editDoctor(@RequestBody UpdateDoctorInforRequest request) {
+//        doctorService.save(request);
+//        return ResponseEntity.status(HttpStatus.OK)
+//                .body(new ApiResponse());
+//    }
 
 }

@@ -1,12 +1,12 @@
 package com.uit.bookingcare.service.doctorInfor.impl;
 
-import com.uit.bookingcare.domain.doctor.join.DoctorInfor;
+import com.uit.bookingcare.domain.doctor.DoctorInfor;
 import com.uit.bookingcare.dto.doctor.DoctorExtraDto;
 import com.uit.bookingcare.dto.doctor.DoctorInforDto;
+import com.uit.bookingcare.dto.schedule.DoctorPatientBookingDto;
 import com.uit.bookingcare.dto.schedule.DoctorScheduleDto;
 import com.uit.bookingcare.mapper.doctor.DoctorInforMapper;
 import com.uit.bookingcare.mapper.schedule.ScheduleMapper;
-import com.uit.bookingcare.repository.clinic.ClinicRepository;
 import com.uit.bookingcare.repository.doctorinfor.DoctorInforRepository;
 import com.uit.bookingcare.repository.schedule.ScheduleRepository;
 import com.uit.bookingcare.request.doctor.UpdateDoctorInforRequest;
@@ -19,7 +19,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -34,8 +33,6 @@ public class DoctorInforServiceImpl implements DoctorService {
     private final ScheduleMapper scheduleMapper;
 
     private final ScheduleRepository scheduleRepository;
-
-    private final ClinicRepository clinicRepository;
 
 
     @Override
@@ -83,5 +80,8 @@ public class DoctorInforServiceImpl implements DoctorService {
     public DoctorExtraDto getExtraDoctorById(Long doctorId) {
         return doctorInforMapper.toExtraDoctorInforDto(doctorInforReposioty.findById(doctorId).orElse(null));
     }
-
+    @Override
+    public  List<DoctorPatientBookingDto> getPatientDoctorByDate(Long doctorId, LocalDate date) {
+        return scheduleMapper.toDoctorPatientBookingDtoList(scheduleRepository.findAllByDoctorIdAndPatientDate(doctorId, date));
+    }
 }

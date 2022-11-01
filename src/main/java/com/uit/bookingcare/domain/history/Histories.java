@@ -1,7 +1,7 @@
 package com.uit.bookingcare.domain.history;
 
 import com.uit.bookingcare.domain.SqlEntity;
-import com.uit.bookingcare.domain.doctor.join.DoctorInfor;
+import com.uit.bookingcare.domain.doctor.DoctorInfor;
 import com.uit.bookingcare.domain.patient.Patient;
 import lombok.AllArgsConstructor;
 import lombok.Data;

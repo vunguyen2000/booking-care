@@ -4,8 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.uit.bookingcare.constant.enums.EGender;
 import com.uit.bookingcare.constant.enums.EUserType;
 import com.uit.bookingcare.domain.SqlEntity;
-import com.uit.bookingcare.domain.doctor.join.DoctorInfor;
-import com.uit.bookingcare.domain.patient.Patient;
+import com.uit.bookingcare.domain.doctor.DoctorInfor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

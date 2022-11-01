@@ -1,15 +1,12 @@
 package com.uit.bookingcare.service.doctorInfor;
 
-import com.uit.bookingcare.domain.doctor.join.DoctorInfor;
-import com.uit.bookingcare.dto.clinics.ClinicDto;
+import com.uit.bookingcare.dto.schedule.DoctorPatientBookingDto;
 import com.uit.bookingcare.dto.doctor.DoctorExtraDto;
 import com.uit.bookingcare.dto.doctor.DoctorInforDto;
 import com.uit.bookingcare.dto.schedule.DoctorScheduleDto;
-import com.uit.bookingcare.request.clinic.UpdateClinicRequest;
 import com.uit.bookingcare.request.doctor.UpdateDoctorInforRequest;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 public interface DoctorService {
@@ -25,4 +22,5 @@ public interface DoctorService {
 
     DoctorExtraDto getExtraDoctorById(Long doctorId);
 
+    List<DoctorPatientBookingDto> getPatientDoctorByDate(Long doctorId, LocalDate date);
 }

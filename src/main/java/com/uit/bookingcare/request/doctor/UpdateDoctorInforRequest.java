@@ -10,6 +10,7 @@ import lombok.Data;
 public class UpdateDoctorInforRequest {
     private Long doctorId;
     private String contentHTML;
+    private String description;
     private String contentMarkdown;
     private EAction action;
     private EPrice selectedPrice;

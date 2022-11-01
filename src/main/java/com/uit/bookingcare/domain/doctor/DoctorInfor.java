@@ -1,4 +1,4 @@
-package com.uit.bookingcare.domain.doctor.join;
+package com.uit.bookingcare.domain.doctor;
 
 import com.uit.bookingcare.constant.enums.*;
 import com.uit.bookingcare.domain.SqlEntity;
@@ -8,7 +8,6 @@ import com.uit.bookingcare.domain.schedule.Schedule;
 import com.uit.bookingcare.domain.speciatly.Specialty;
 import com.uit.bookingcare.domain.user.User;
 import com.uit.bookingcare.utils.ECalendarShiftConverter;
-import io.swagger.models.auth.In;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -36,10 +35,12 @@ public class DoctorInfor extends SqlEntity {
     @Enumerated(EnumType.STRING)
     private EProvince province;
 
-    @Column(name = "description_html", columnDefinition = "TEXT")
-    private String descriptionHTML;
-    @Column(name = "description_markdown", columnDefinition = "TEXT")
-    private String descriptionMarkdown;
+    @Column(name = "description", columnDefinition = "TEXT")
+    private String description;
+    @Column(name = "content_markdown", columnDefinition = "TEXT")
+    private String contentMarkdown;
+    @Column(name = "content_html", columnDefinition = "TEXT")
+    private String contentHTML;
 
     @Convert(converter = ECalendarShiftConverter.class)
     private List<ETimeType> calendarShifts;
