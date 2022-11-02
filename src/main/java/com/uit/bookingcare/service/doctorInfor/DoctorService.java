@@ -5,6 +5,7 @@ import com.uit.bookingcare.dto.doctor.DoctorExtraDto;
 import com.uit.bookingcare.dto.doctor.DoctorInforDto;
 import com.uit.bookingcare.dto.schedule.DoctorPatientBookingDto;
 import com.uit.bookingcare.dto.schedule.DoctorScheduleDto;
+import com.uit.bookingcare.request.doctor.BulkCreateSchedule;
 import com.uit.bookingcare.request.doctor.UpdateDoctorInforRequest;
 
 import java.time.LocalDate;
@@ -26,5 +27,6 @@ public interface DoctorService {
     List<DoctorPatientBookingDto> getListPatientDoctorByDate(Long doctorId, LocalDate date);
     DetailDoctorDataDto getProfileDoctorById(Long doctorId);
 
+    void bulkCreateSchedule(BulkCreateSchedule request);
 
 }

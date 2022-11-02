@@ -1,6 +1,7 @@
 package com.uit.bookingcare.service.doctorInfor.impl;
 
 import com.uit.bookingcare.domain.doctor.DoctorInfor;
+import com.uit.bookingcare.domain.schedule.Schedule;
 import com.uit.bookingcare.dto.doctor.DetailDoctorDataDto;
 import com.uit.bookingcare.dto.doctor.DoctorExtraDto;
 import com.uit.bookingcare.dto.doctor.DoctorInforDto;
@@ -12,6 +13,8 @@ import com.uit.bookingcare.mapper.schedule.ScheduleMapper;
 import com.uit.bookingcare.repository.doctorinfor.DoctorInforRepository;
 import com.uit.bookingcare.repository.schedule.ScheduleRepository;
 import com.uit.bookingcare.repository.user.UserRepository;
+import com.uit.bookingcare.request.clinic.CreateClinicRequest;
+import com.uit.bookingcare.request.doctor.BulkCreateSchedule;
 import com.uit.bookingcare.request.doctor.UpdateDoctorInforRequest;
 import com.uit.bookingcare.service.doctorInfor.DoctorService;
 import lombok.RequiredArgsConstructor;
@@ -99,6 +102,11 @@ public class DoctorInforServiceImpl implements DoctorService {
     @Override
     public DetailDoctorDataDto getProfileDoctorById(Long doctorId) {
         return userMapper.detailDoctorDataDto(userRepository.findById(doctorId).orElse(null));
+    }
+
+    @Override
+    public void bulkCreateSchedule(BulkCreateSchedule request) {
+        scheduleRepository.save(doctorInforMapper.bulkCreateSchedule(request));
     }
 
 

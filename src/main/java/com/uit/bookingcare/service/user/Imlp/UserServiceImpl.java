@@ -31,7 +31,6 @@ public class UserServiceImpl implements UserService {
             Optional<User> optionalEnity = userRepository.findById(Long.parseLong(id));
             List<User> intLIst = Arrays.asList(optionalEnity.get());
             return  userMapper.userDtoList(intLIst);
-
         }
     }
 }

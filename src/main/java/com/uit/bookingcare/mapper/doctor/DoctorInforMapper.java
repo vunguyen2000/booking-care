@@ -3,13 +3,17 @@ package com.uit.bookingcare.mapper.doctor;
 import com.uit.bookingcare.constant.enums.EPayment;
 import com.uit.bookingcare.constant.enums.EPrice;
 import com.uit.bookingcare.constant.enums.EProvince;
+import com.uit.bookingcare.constant.enums.ETimeType;
 import com.uit.bookingcare.domain.doctor.DoctorInfor;
+import com.uit.bookingcare.domain.schedule.Schedule;
 import com.uit.bookingcare.dto.doctor.*;
+import com.uit.bookingcare.dto.schedule.ArrSchedule;
 import com.uit.bookingcare.mapper.MapperBase;
 import com.uit.bookingcare.repository.clinic.ClinicRepository;
 import com.uit.bookingcare.repository.doctorinfor.DoctorInforRepository;
 import com.uit.bookingcare.repository.specialty.SpecialtyRepository;
 import com.uit.bookingcare.repository.user.UserRepository;
+import com.uit.bookingcare.request.doctor.BulkCreateSchedule;
 import com.uit.bookingcare.request.doctor.UpdateDoctorInforRequest;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +26,10 @@ import java.util.List;
 public abstract class DoctorInforMapper implements MapperBase {
 
     @Autowired
+    private  SpecialtyRepository specialtyRepository;
+    @Autowired
     private ClinicRepository clinicRepository;
 
-    @Autowired
-    private SpecialtyRepository specialtyRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -87,5 +91,19 @@ public abstract class DoctorInforMapper implements MapperBase {
     @Mapping(source = "selectedPayment", target = "payment")
     @Mapping(source = "selectedProvince", target = "province")
     public abstract void updateDoctorInfor(UpdateDoctorInforRequest dto, @MappingTarget DoctorInfor entity);
+
+
+    @Named("bulkCreateSchedule")
+    @BeforeMapping
+    protected void buikcreateScheduleBefore(BulkCreateSchedule dto, @MappingTarget Schedule entity) {
+        entity.setCurrentnumber(dto.getArrSchedule().getCurrentNumber());
+        entity.setMaxNumber(dto.getArrSchedule().getMaxNumber());
+        entity.setDate(dto.getArrSchedule().getDate());
+        entity.setTimeType(dto.getArrSchedule().getTimeType());
+    }
+    @BeanMapping(qualifiedByName = "bulkCreateSchedule", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(source = "doctorId", target = "doctorInfor.id")
+    @Mapping(source = "formatedDate", target = "date")
+    public abstract Schedule bulkCreateSchedule( BulkCreateSchedule request);
 
 }

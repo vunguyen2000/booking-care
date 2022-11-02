@@ -2,6 +2,7 @@ package com.uit.bookingcare.controller;
 
 
 import com.uit.bookingcare.dto.response.ApiResponse;
+import com.uit.bookingcare.request.doctor.BulkCreateSchedule;
 import com.uit.bookingcare.request.doctor.UpdateDoctorInforRequest;
 import com.uit.bookingcare.service.doctorInfor.DoctorService;
 import io.swagger.annotations.Api;
@@ -70,16 +71,11 @@ public class DoctorController {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new ApiResponse(doctorService.getProfileDoctorById(doctorId)));
     }
-//    @GetMapping(value = "/get-all-users")
-//    public ResponseEntity<?> getDoctorById(@RequestParam(value = "id", required = false) Long id) {
-//        return ResponseEntity.status(HttpStatus.OK)
-//                .body(new ApiResponse(doctorService.getDoctorById(id)));
-//    }
-//    @PostMapping(value = "/bulk-create-schedule")
-//    public ResponseEntity<?> bulkCreateSchedule(@RequestBody UpdateDoctorInforRequest request) {
-//        doctorService.save(request);
-//        return ResponseEntity.status(HttpStatus.OK)
-//                .body(new ApiResponse());
-//    }
+    @PostMapping(value = "/bulk-create-schedule")
+    public ResponseEntity<?> bulkCreateSchedule(@RequestBody BulkCreateSchedule request) {
+        doctorService.bulkCreateSchedule(request);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new ApiResponse());
+    }
 
 }
