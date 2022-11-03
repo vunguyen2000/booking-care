@@ -1,9 +1,13 @@
 package com.uit.bookingcare.service.user.Imlp;
 
+import com.uit.bookingcare.domain.doctor.DoctorInfor;
 import com.uit.bookingcare.domain.user.User;
 import com.uit.bookingcare.dto.user.UserDto;
 import com.uit.bookingcare.mapper.doctor.UserMapper;
 import com.uit.bookingcare.repository.user.UserRepository;
+import com.uit.bookingcare.request.clinic.CreateClinicRequest;
+import com.uit.bookingcare.request.user.CreateUserRequest;
+import com.uit.bookingcare.request.user.UpdateUserRequest;
 import com.uit.bookingcare.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,5 +37,24 @@ public class UserServiceImpl implements UserService {
             return  userMapper.userDtoList(intLIst);
         }
     }
+
+    @Override
+    public void save(CreateUserRequest request) {
+        userRepository.save(userMapper.toUser(request));
+    }
+
+    @Override
+    public void update(UpdateUserRequest request) {
+        if (request.getId() == null) {
+            return;
+        }
+        User oldUser = userRepository.findById(request.getId()).orElse(null);
+        if (oldUser == null) {
+            return;
+        }
+        userMapper.updateUser(request, oldUser);
+        userRepository.save(oldUser);
+    }
+
 }
 

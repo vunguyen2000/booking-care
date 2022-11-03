@@ -1,11 +1,18 @@
 package com.uit.bookingcare.mapper.doctor;
 
 import com.uit.bookingcare.constant.enums.EPosition;
+import com.uit.bookingcare.domain.clinics.Clinic;
+import com.uit.bookingcare.domain.doctor.DoctorInfor;
 import com.uit.bookingcare.domain.user.User;
 import com.uit.bookingcare.dto.doctor.DetailDoctorDataDto;
+import com.uit.bookingcare.dto.doctor.MarkdownDataDto;
 import com.uit.bookingcare.dto.doctor.PositionDataDto;
 import com.uit.bookingcare.dto.user.UserDto;
 import com.uit.bookingcare.mapper.MapperBase;
+import com.uit.bookingcare.request.clinic.CreateClinicRequest;
+import com.uit.bookingcare.request.doctor.UpdateDoctorInforRequest;
+import com.uit.bookingcare.request.user.CreateUserRequest;
+import com.uit.bookingcare.request.user.UpdateUserRequest;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -27,6 +34,7 @@ public abstract class UserMapper implements MapperBase {
         EPosition position = user.getDoctorInfor().getPosition();
         dto.setPositionData(new PositionDataDto(position.getValueEn(), position.getValueVi()));
         dto.setDoctorInfor(doctorInforMapper.toExtraDoctorInforDto(user.getDoctorInfor()));
+        dto.setMarkdown(new MarkdownDataDto(user.getDoctorInfor().getDescription(),user.getDoctorInfor().getContentHTML(),user.getDoctorInfor().getContentMarkdown()));
     }
 
     @BeanMapping(qualifiedByName = "detailDoctorDataDto", ignoreByDefault = true,
@@ -39,6 +47,7 @@ public abstract class UserMapper implements MapperBase {
     @Mapping(source = "user.gender", target = "gender")
     @Mapping(source = "user.role.id", target = "roleId")
     @Mapping(source = "user.doctorInfor.position", target = "positionId")
+    @Mapping(source = "user.doctorInfor.id", target = "id")
     public abstract DetailDoctorDataDto detailDoctorDataDto(User user);
 
 
@@ -49,5 +58,16 @@ public abstract class UserMapper implements MapperBase {
     @Mapping(source = "user.doctorInfor.position", target = "positionId")
     public abstract UserDto userDto(User user);
     public abstract List<UserDto> userDtoList(List<User> users);
+
+    @Mapping(source = "roleId", target = "userType")
+    @Mapping(source = "roleType", target = "role.id")
+    public abstract User toUser(CreateUserRequest request);
+
+
+
+    @BeanMapping(qualifiedByName = "updateUser", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "id", ignore = true)
+    @Mapping(source = "roleId", target = "role.id")
+    public abstract void updateUser(UpdateUserRequest dto, @MappingTarget User entity);
 
 }
