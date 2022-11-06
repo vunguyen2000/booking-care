@@ -1,19 +1,20 @@
 package com.uit.bookingcare.service.doctorInfor.impl;
 
 import com.uit.bookingcare.domain.doctor.DoctorInfor;
-import com.uit.bookingcare.domain.schedule.Schedule;
 import com.uit.bookingcare.dto.doctor.DetailDoctorDataDto;
 import com.uit.bookingcare.dto.doctor.DoctorExtraDto;
 import com.uit.bookingcare.dto.doctor.DoctorInforDto;
+import com.uit.bookingcare.dto.doctor.SearchDto;
 import com.uit.bookingcare.dto.schedule.DoctorPatientBookingDto;
 import com.uit.bookingcare.dto.schedule.DoctorScheduleDto;
+import com.uit.bookingcare.mapper.clinics.ClinicMapper;
 import com.uit.bookingcare.mapper.doctor.DoctorInforMapper;
 import com.uit.bookingcare.mapper.doctor.UserMapper;
 import com.uit.bookingcare.mapper.schedule.ScheduleMapper;
+import com.uit.bookingcare.repository.clinic.ClinicRepository;
 import com.uit.bookingcare.repository.doctorinfor.DoctorInforRepository;
 import com.uit.bookingcare.repository.schedule.ScheduleRepository;
 import com.uit.bookingcare.repository.user.UserRepository;
-import com.uit.bookingcare.request.clinic.CreateClinicRequest;
 import com.uit.bookingcare.request.doctor.BulkCreateSchedule;
 import com.uit.bookingcare.request.doctor.UpdateDoctorInforRequest;
 import com.uit.bookingcare.service.doctorInfor.DoctorService;
@@ -32,6 +33,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DoctorInforServiceImpl implements DoctorService {
 
+    private final ClinicRepository clinicRepository;
+    private final ClinicMapper clinicMapper;
     private final DoctorInforMapper doctorInforMapper;
 
     private final DoctorInforRepository doctorInforReposioty;
@@ -80,11 +83,13 @@ public class DoctorInforServiceImpl implements DoctorService {
 
         DoctorInfor oldDoctor = doctorInforReposioty.findById(request.getDoctorId()).orElse(null);
         if (oldDoctor == null) {
-            return;
+         return;
         }
         doctorInforMapper.updateDoctorInfor(request, oldDoctor);
         doctorInforReposioty.save(oldDoctor);
     }
+
+
 
     @Override
     public DoctorExtraDto getExtraDoctorById(Long doctorId) {
@@ -107,6 +112,14 @@ public class DoctorInforServiceImpl implements DoctorService {
     @Override
     public void bulkCreateSchedule(BulkCreateSchedule request) {
         scheduleRepository.save(doctorInforMapper.bulkCreateSchedule(request));
+    }
+
+    @Override
+    public SearchDto search(String text) {
+        SearchDto dto = new SearchDto();
+        dto.setDoctors(doctorInforMapper.doctorSearchDtoList(doctorInforReposioty.findAllByUserFirstNameContainingIgnoreCase(text)));
+        dto.setClinics(clinicMapper.clinicSearchDtoList(clinicRepository.findAllByNameContainingIgnoreCase(text)));
+        return dto;
     }
 
 

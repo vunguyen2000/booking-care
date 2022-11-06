@@ -1,5 +1,6 @@
 package com.uit.bookingcare.service.auth;
 
+import com.uit.bookingcare.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,9 +13,14 @@ import java.util.ArrayList;
 @Service
 @RequiredArgsConstructor
 public class JwtUserDetailsService implements UserDetailsService {
-
+    private final UserRepository userRepository;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return new User("Vu", "123", new ArrayList<>());
+        com.uit.bookingcare.domain.user.User user = userRepository.findByEmail(username).orElse(null);
+        if (user != null) {
+            return new User(user.getEmail(), user.getPassword(), new ArrayList<>());
+        } else {
+            throw new UsernameNotFoundException("User not found with username: " + username);
+        }
     }
 }

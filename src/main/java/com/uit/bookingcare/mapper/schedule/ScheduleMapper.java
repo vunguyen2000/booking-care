@@ -53,22 +53,21 @@ public abstract class ScheduleMapper implements MapperBase {
     @BeforeMapping
     protected void toDoctorPatientBookingDto(Schedule schedule, @MappingTarget DoctorPatientBookingDto dto) {
         ETimeType timeType = schedule.getTimeType();
-        User user = userRepository.findById(schedule.getPatient().getId()).orElse(null);
         Booking booking = bookingRepository.findById(schedule.getId()).orElse(null);
         if(booking!=null){
             dto.setStatusId(booking.getStatusId());
             dto.setToken(booking.getToken());
         }
+        User user = userRepository.findById(booking.getPatient().getId()).orElse(null);
         dto.setTimeTypeDataPatient(new TimeTypeDataDto(timeType.getValueEn(), timeType.getValueVi()));
         if (user != null){
             EGender gender = user.getGender();
             dto.setPatientData(new PatientDataDto(user.getEmail(),user.getFirstName(),user.getLastName(),user.getAddress(),user.getGender(), new GenderDataDto(gender.getValueEn(),gender.getValueVi())));
         }
-
+        dto.setPatientId(user.getId());
     }
 
     @BeanMapping(qualifiedByName = "toDoctorPatientBookingDto")
-    @Mapping(source = "patient.id", target = "patientId")
     @Mapping(source = "doctorInfor.id", target = "doctorId")
     public abstract DoctorPatientBookingDto toDoctorPatientBookingDto(Schedule schedule);
 

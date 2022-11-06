@@ -29,5 +29,4 @@ public class DetailDoctorDataDto {
     @JsonProperty(value = "Doctor_Infor")
     private DoctorExtraDto doctorInfor;
 
-
 }

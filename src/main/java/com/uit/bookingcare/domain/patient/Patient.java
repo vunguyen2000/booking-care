@@ -1,5 +1,6 @@
 package com.uit.bookingcare.domain.patient;
 
+import com.uit.bookingcare.domain.booking.Booking;
 import com.uit.bookingcare.domain.history.Histories;
 import com.uit.bookingcare.domain.schedule.Schedule;
 import com.uit.bookingcare.domain.user.User;
@@ -16,13 +17,18 @@ import java.util.List;
 @Table(name = "patient")
 public class Patient {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "patient")
     private List<Histories> histories = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "patient")
-    private List<Schedule> schedules = new ArrayList<>();
+    private List<Booking> bookings = new ArrayList<>();
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @MapsId
+    @JoinColumn(name = "id")
+    private User user;
 
 }

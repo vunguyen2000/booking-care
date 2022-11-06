@@ -1,10 +1,13 @@
 package com.uit.bookingcare.service.user.Imlp;
 
+import com.uit.bookingcare.constant.enums.EStatus;
+import com.uit.bookingcare.constant.enums.EUserType;
 import com.uit.bookingcare.domain.doctor.DoctorInfor;
 import com.uit.bookingcare.domain.user.User;
 import com.uit.bookingcare.dto.user.UserDto;
 import com.uit.bookingcare.mapper.doctor.UserMapper;
 import com.uit.bookingcare.repository.user.UserRepository;
+import com.uit.bookingcare.request.booking.PostBookAppointment;
 import com.uit.bookingcare.request.clinic.CreateClinicRequest;
 import com.uit.bookingcare.request.user.CreateUserRequest;
 import com.uit.bookingcare.request.user.UpdateUserRequest;
@@ -28,13 +31,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDto> findAll(String id) {
 
-        if (id.equals("ALL")){
+        if (id.equals("ALL")) {
             return userMapper.userDtoList(userRepository.findAll());
-        }
-        else {
+        } else {
             Optional<User> optionalEnity = userRepository.findById(Long.parseLong(id));
             List<User> intLIst = Arrays.asList(optionalEnity.get());
-            return  userMapper.userDtoList(intLIst);
+            return userMapper.userDtoList(intLIst);
         }
     }
 
@@ -56,5 +58,12 @@ public class UserServiceImpl implements UserService {
         userRepository.save(oldUser);
     }
 
+    @Override
+    public void delete(Long id) {
+        if (userRepository.findById(id).isEmpty()) {
+            return;
+        }
+        userRepository.deleteById(id);
+    }
 }
 

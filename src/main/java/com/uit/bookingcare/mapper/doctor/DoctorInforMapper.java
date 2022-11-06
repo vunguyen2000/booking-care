@@ -3,11 +3,9 @@ package com.uit.bookingcare.mapper.doctor;
 import com.uit.bookingcare.constant.enums.EPayment;
 import com.uit.bookingcare.constant.enums.EPrice;
 import com.uit.bookingcare.constant.enums.EProvince;
-import com.uit.bookingcare.constant.enums.ETimeType;
 import com.uit.bookingcare.domain.doctor.DoctorInfor;
 import com.uit.bookingcare.domain.schedule.Schedule;
 import com.uit.bookingcare.dto.doctor.*;
-import com.uit.bookingcare.dto.schedule.ArrSchedule;
 import com.uit.bookingcare.mapper.MapperBase;
 import com.uit.bookingcare.repository.clinic.ClinicRepository;
 import com.uit.bookingcare.repository.doctorinfor.DoctorInforRepository;
@@ -106,4 +104,9 @@ public abstract class DoctorInforMapper implements MapperBase {
     @Mapping(source = "formatedDate", target = "date")
     public abstract Schedule bulkCreateSchedule( BulkCreateSchedule request);
 
+    @Mapping(source = "user.role.id", target = "roleId")
+    @Mapping(source = "user.firstName", target = "firstName")
+    @Mapping(source = "user.lastName", target = "lastName")
+    public abstract DoctorSearchDto doctorSearchDto(DoctorInfor doctorInfor);
+    public abstract List<DoctorSearchDto> doctorSearchDtoList(List<DoctorInfor> doctorInfors);
 }

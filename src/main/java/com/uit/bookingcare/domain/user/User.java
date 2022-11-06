@@ -5,6 +5,7 @@ import com.uit.bookingcare.constant.enums.EGender;
 import com.uit.bookingcare.constant.enums.EUserType;
 import com.uit.bookingcare.domain.SqlEntity;
 import com.uit.bookingcare.domain.doctor.DoctorInfor;
+import com.uit.bookingcare.domain.patient.Patient;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -65,6 +66,24 @@ public class User extends SqlEntity {
     )
     private DoctorInfor doctorInfor;
 
+    @OneToOne(
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+    )
+    private Patient patient;
+
+    public void setPatient(Patient patient) {
+        if (patient == null) {
+            if (this.patient != null) {
+                this.patient.setUser(null);
+            }
+        } else {
+            patient.setUser(this);
+        }
+        this.patient = patient;
+    }
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), id);

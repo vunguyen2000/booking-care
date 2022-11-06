@@ -2,6 +2,7 @@ package com.uit.bookingcare.mapper.clinics;
 
 import com.uit.bookingcare.domain.clinics.Clinic;
 import com.uit.bookingcare.dto.clinics.ClinicDto;
+import com.uit.bookingcare.dto.clinics.ClinicSearchDto;
 import com.uit.bookingcare.mapper.MapperBase;
 import com.uit.bookingcare.request.clinic.CreateClinicRequest;
 import com.uit.bookingcare.request.clinic.UpdateClinicRequest;
@@ -23,4 +24,9 @@ public abstract class ClinicMapper implements MapperBase {
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     public abstract void updateClinic(UpdateClinicRequest dto, @MappingTarget Clinic entity);
+
+
+    public abstract ClinicSearchDto clinicSearchDto(Clinic clinic);
+
+    public abstract List<ClinicSearchDto> clinicSearchDtoList(List<Clinic> clinics);
 }

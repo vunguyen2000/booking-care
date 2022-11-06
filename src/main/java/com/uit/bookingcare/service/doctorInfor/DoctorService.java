@@ -3,6 +3,7 @@ package com.uit.bookingcare.service.doctorInfor;
 import com.uit.bookingcare.dto.doctor.DetailDoctorDataDto;
 import com.uit.bookingcare.dto.doctor.DoctorExtraDto;
 import com.uit.bookingcare.dto.doctor.DoctorInforDto;
+import com.uit.bookingcare.dto.doctor.SearchDto;
 import com.uit.bookingcare.dto.schedule.DoctorPatientBookingDto;
 import com.uit.bookingcare.dto.schedule.DoctorScheduleDto;
 import com.uit.bookingcare.request.doctor.BulkCreateSchedule;
@@ -28,5 +29,8 @@ public interface DoctorService {
     DetailDoctorDataDto getProfileDoctorById(Long doctorId);
 
     void bulkCreateSchedule(BulkCreateSchedule request);
+
+    SearchDto search(String text);
+
 
 }

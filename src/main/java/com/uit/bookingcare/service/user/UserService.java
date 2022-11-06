@@ -2,6 +2,7 @@ package com.uit.bookingcare.service.user;
 
 
 import com.uit.bookingcare.dto.user.UserDto;
+import com.uit.bookingcare.request.booking.PostBookAppointment;
 import com.uit.bookingcare.request.specialty.CreateSpecialtyRequest;
 import com.uit.bookingcare.request.user.CreateUserRequest;
 import com.uit.bookingcare.request.user.UpdateUserRequest;
@@ -13,4 +14,5 @@ public interface UserService {
 
     void save(CreateUserRequest request);
     void update(UpdateUserRequest request);
+    void delete(Long id);
 }
