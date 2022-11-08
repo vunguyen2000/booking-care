@@ -1,9 +1,10 @@
 package com.uit.bookingcare.repository.specialty;
 
-import com.uit.bookingcare.domain.clinics.Clinic;
 import com.uit.bookingcare.domain.speciatly.Specialty;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface SpecialtyRepository extends JpaRepository<Specialty, Long> {
+import java.util.Optional;
 
+public interface SpecialtyRepository extends JpaRepository<Specialty, Long> {
+   Specialty findByNameContainingIgnoreCase(String name);
 }

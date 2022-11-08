@@ -19,10 +19,6 @@ public class Patient {
     @Id
     private Long id;
 
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "patient")
-    private List<Histories> histories = new ArrayList<>();
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "patient")
     private List<Booking> bookings = new ArrayList<>();
 

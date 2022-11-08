@@ -1,5 +1,10 @@
 package com.uit.bookingcare.configuration;
 
+import com.uit.bookingcare.constant.MessageCode;
+import com.uit.bookingcare.constant.enums.EUserType;
+import com.uit.bookingcare.domain.user.User;
+import com.uit.bookingcare.repository.user.UserRepository;
+import com.uit.bookingcare.service.exception.BadRequestException;
 import com.uit.bookingcare.utils.MessageHelper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -27,6 +32,8 @@ public class JwtTokenUtil implements Serializable {
     @Value("${jwt.secret}")
     private String secret;
 
+    @Autowired
+    private UserRepository userRepository;
 
     public JwtTokenUtil(MessageHelper messageHelper) {
         this.messageHelper = messageHelper;
@@ -37,8 +44,7 @@ public class JwtTokenUtil implements Serializable {
         try {
             return getClaimFromToken(token, Claims::getSubject);
         } catch (Exception e) {
-            throw e;
-//            throw new BadRequestException(messageHelper.getMessage(MessageCode.Token.INVALID_TOKEN));
+            throw new BadRequestException(messageHelper.getMessage(MessageCode.Token.INVALID_TOKEN));
         }
     }
 
@@ -66,7 +72,13 @@ public class JwtTokenUtil implements Serializable {
     //generate token for user
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("full_name", "Vu");
+        User user = userRepository.findByEmail(userDetails.getUsername()).get();
+        claims.put("role", user.getUserType());
+        claims.put("email", user.getEmail());
+        if (user.getGender()!=null){
+            claims.put("gender-vi", user.getGender().getValueVi());
+            claims.put("gender-en", user.getGender().getValueEn());
+        }
         return doGenerateToken(claims, userDetails.getUsername());
     }
 

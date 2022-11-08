@@ -22,7 +22,6 @@ public abstract class ClinicMapper implements MapperBase {
 
     public abstract List<ClinicDto> toClinicDtoList(List<Clinic> clinics);
 
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     public abstract void updateClinic(UpdateClinicRequest dto, @MappingTarget Clinic entity);
 
 

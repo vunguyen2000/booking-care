@@ -1,17 +1,12 @@
 package com.uit.bookingcare.domain;
 
-import com.uit.bookingcare.domain.user.User;
 import lombok.Data;
-import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -20,7 +15,6 @@ import java.util.Date;
 public class SqlEntity implements Serializable {
 
     protected static final long serialVersionUID = 1L;
-
 
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
@@ -31,5 +25,4 @@ public class SqlEntity implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "updated_at")
     protected Date updatedAt = new Date();
-
 }

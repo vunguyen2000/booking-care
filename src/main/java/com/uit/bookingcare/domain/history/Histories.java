@@ -25,9 +25,4 @@ public class Histories extends SqlEntity {
     @JoinColumn(name = "doctor_id")
     private DoctorInfor doctorInfor;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "patient_id")
-    private Patient patient;
-
-
 }

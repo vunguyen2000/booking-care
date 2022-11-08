@@ -74,6 +74,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/public/**").permitAll()
                 .antMatchers("/tuition/**").permitAll()
                 .antMatchers("/get-clinic").permitAll()
+                .antMatchers("/get-specialty").permitAll()
+                .antMatchers("/get-all-doctors").permitAll()
+                .antMatchers("/top-doctor-home").permitAll()
+                .antMatchers("/get-detail-doctor-by-id").permitAll()
+                .antMatchers("/get-profile-doctor-by-id").permitAll()
+                .antMatchers("/search").permitAll()
                 .antMatchers("/**").permitAll()
                 // all other requests need to be authenticated
                 .anyRequest().authenticated().and().

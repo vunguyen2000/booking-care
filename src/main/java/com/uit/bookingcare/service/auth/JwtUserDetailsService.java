@@ -13,14 +13,16 @@ import java.util.ArrayList;
 @Service
 @RequiredArgsConstructor
 public class JwtUserDetailsService implements UserDetailsService {
+
     private final UserRepository userRepository;
+
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        com.uit.bookingcare.domain.user.User user = userRepository.findByEmail(username).orElse(null);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        com.uit.bookingcare.domain.user.User user = userRepository.findByEmail(email).orElse(null);
         if (user != null) {
             return new User(user.getEmail(), user.getPassword(), new ArrayList<>());
         } else {
-            throw new UsernameNotFoundException("User not found with username: " + username);
+            throw new UsernameNotFoundException("User not found with email: " + email);
         }
     }
 }

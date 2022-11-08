@@ -1,12 +1,8 @@
 package com.uit.bookingcare.service.booking.impl;
 
 import com.uit.bookingcare.constant.enums.EStatus;
-import com.uit.bookingcare.constant.enums.EUserType;
 import com.uit.bookingcare.domain.booking.Booking;
-import com.uit.bookingcare.domain.patient.Patient;
 import com.uit.bookingcare.domain.user.User;
-import com.uit.bookingcare.dto.patient.PatientDataDto;
-import com.uit.bookingcare.dto.patient.PatientDto;
 import com.uit.bookingcare.mapper.booking.BookingMapper;
 import com.uit.bookingcare.mapper.doctor.UserMapper;
 import com.uit.bookingcare.mapper.patient.PatientMapper;
@@ -53,7 +49,6 @@ public class BookingServiceImpl implements BookingService {
     public void create(PostBookAppointment request) {
         if(request.getScheduleId()!=null&request.getEmail()!=null) {
             User newUser = userRepository.saveAndFlush(userMapper.createNewPatient(request));
-//            Patient patient = patientRepository.save(patientMapper.toPatient(newUser.getId()));
             request.setStatusId(EStatus.S1);
             request.setPatientId(newUser.getId());
             bookingRepository.save(bookingMapper.createNewBooking(request));

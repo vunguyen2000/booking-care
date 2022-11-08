@@ -1,6 +1,8 @@
 package com.uit.bookingcare.service.doctorInfor.impl;
 
+import com.uit.bookingcare.constant.MessageCode;
 import com.uit.bookingcare.domain.doctor.DoctorInfor;
+import com.uit.bookingcare.domain.user.User;
 import com.uit.bookingcare.dto.doctor.DetailDoctorDataDto;
 import com.uit.bookingcare.dto.doctor.DoctorExtraDto;
 import com.uit.bookingcare.dto.doctor.DoctorInforDto;
@@ -18,8 +20,12 @@ import com.uit.bookingcare.repository.user.UserRepository;
 import com.uit.bookingcare.request.doctor.BulkCreateSchedule;
 import com.uit.bookingcare.request.doctor.UpdateDoctorInforRequest;
 import com.uit.bookingcare.service.doctorInfor.DoctorService;
+import com.uit.bookingcare.service.exception.BadRequestException;
+import com.uit.bookingcare.service.exception.NotFoundException;
+import com.uit.bookingcare.utils.MessageHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -46,6 +52,8 @@ public class DoctorInforServiceImpl implements DoctorService {
     private final UserRepository userRepository;
 
     private final UserMapper userMapper;
+    @Autowired
+    private MessageHelper messageHelper;
 
 
     @Override
@@ -64,10 +72,15 @@ public class DoctorInforServiceImpl implements DoctorService {
         return doctorInforMapper.doctorInforDtoList(doctorInforReposioty.findAll(pageable).getContent());
     }
 
+
     @Override
     public DetailDoctorDataDto getDetailDoctorById(Long id) {
 
-        return userMapper.detailDoctorDataDto(userRepository.findById(id).orElse(null));
+        User doctor = userRepository.findById(id).orElse(null);
+        if (doctor == null){
+            throw new NotFoundException(messageHelper.getMessage(MessageCode.DoctorInfor.NOT_FOUND));
+        }
+        return userMapper.detailDoctorDataDto(doctor);
     }
 
     @Override
@@ -78,12 +91,12 @@ public class DoctorInforServiceImpl implements DoctorService {
     @Override
     public void save(UpdateDoctorInforRequest request) {
         if (request.getDoctorId() == null) {
-            return;
+            throw new BadRequestException(messageHelper.getMessage(MessageCode.DoctorInfor.INVALID));
         }
 
         DoctorInfor oldDoctor = doctorInforReposioty.findById(request.getDoctorId()).orElse(null);
         if (oldDoctor == null) {
-         return;
+            throw new NotFoundException(messageHelper.getMessage(MessageCode.DoctorInfor.NOT_FOUND));
         }
         doctorInforMapper.updateDoctorInfor(request, oldDoctor);
         doctorInforReposioty.save(oldDoctor);
@@ -99,7 +112,7 @@ public class DoctorInforServiceImpl implements DoctorService {
     public List<DoctorPatientBookingDto> getListPatientDoctorByDate(Long doctorId, LocalDate date) {
         DoctorInfor doctorInfor = doctorInforReposioty.findById(doctorId).orElse(null);
         if(doctorInfor ==null){
-            return null;
+            throw new NotFoundException(messageHelper.getMessage(MessageCode.DoctorInfor.NOT_FOUND));
         }
         return scheduleMapper.toDoctorPatientBookingDtoList(scheduleRepository.findAllByDoctorIdAndPatientDate(doctorId, date));
     }
@@ -111,6 +124,7 @@ public class DoctorInforServiceImpl implements DoctorService {
 
     @Override
     public void bulkCreateSchedule(BulkCreateSchedule request) {
+
         scheduleRepository.save(doctorInforMapper.bulkCreateSchedule(request));
     }
 

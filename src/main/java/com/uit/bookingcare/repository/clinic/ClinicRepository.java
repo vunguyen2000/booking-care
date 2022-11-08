@@ -11,13 +11,8 @@ public interface ClinicRepository extends JpaRepository<Clinic, Long> {
 
     Optional<Clinic> findById(Long id);
     List<Clinic> findAllByNameContainingIgnoreCase(String name);
+
+    Clinic findByNameContainingIgnoreCase(String name);
     List<Clinic> findAllByNameContainingIgnoreCaseOrAddressContainingIgnoreCase(String name, String address);
 
-//    @Query(value = "SELECT * \n" +
-//            " FROM class_room cr, open_course oc" +
-//            " where cr.id = oc.class_id" +
-//            " AND oc.semester_id = :semesterId" +
-//            " AND cr.id = :classId",
-//            nativeQuery = true)
-//    Optional<Clinic> findClassRoomBySemesterId(Long clinicid, Long semesterId);
 }

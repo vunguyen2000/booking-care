@@ -29,7 +29,7 @@ public class UserController  {
                 .body(new ApiResponse(userService.findAll(id)));
     }
     @PostMapping(value = "/create-new-user")
-    public ResponseEntity<?> createSpecialty(@RequestBody CreateUserRequest request) {
+    public ResponseEntity<?> createUser(@RequestBody CreateUserRequest request) {
         userService.save(request);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new ApiResponse());
