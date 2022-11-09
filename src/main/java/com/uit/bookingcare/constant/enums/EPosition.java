@@ -7,7 +7,7 @@ public enum EPosition {
     P1("Master","Thạc sĩ"),
     P2("Doctor","Tiến sĩ"),
     P3("Asocicate Professor","Phó giáo sư"),
-    PROFESSOR("Professor","Giáo sư");
+    P4("Professor","Giáo sư");
 
     @Getter
     private final String valueEn;

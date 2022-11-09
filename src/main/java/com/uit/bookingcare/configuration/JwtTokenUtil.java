@@ -75,10 +75,14 @@ public class JwtTokenUtil implements Serializable {
         User user = userRepository.findByEmail(userDetails.getUsername()).get();
         claims.put("role", user.getUserType());
         claims.put("email", user.getEmail());
+        claims.put("full_name", user.getFirstName());
         if (user.getGender()!=null){
             claims.put("gender-vi", user.getGender().getValueVi());
             claims.put("gender-en", user.getGender().getValueEn());
         }
+//        if (user.getUserType() == EUserType.DOCTOR) {
+//
+//        }
         return doGenerateToken(claims, userDetails.getUsername());
     }
 

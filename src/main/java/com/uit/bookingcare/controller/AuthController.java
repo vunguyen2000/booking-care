@@ -59,11 +59,11 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.OK).body(json.toString());
     }
 
-    private void authenticate(String username, String password){
+    private void authenticate(String email, String password){
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
         } catch (DisabledException | BadCredentialsException e) {
-            throw new ForbiddenException(messageHelper.getMessage(MessageCode.User.WRONG,username));
+            throw new ForbiddenException(messageHelper.getMessage(MessageCode.User.WRONG,email));
         }
     }
 

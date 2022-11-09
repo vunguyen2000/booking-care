@@ -33,5 +33,6 @@ public interface MessageCode {
     interface Booking {
         String NOT_FOUND = "message.booking.NotFound";
         String IS_COMPLETED = "message.booking.IsCompleted";
+        String IS_EXIST = "message.booking.Exist";
     }
 }

@@ -37,7 +37,7 @@ public class SpecialtyServiceImpl implements SpecialtyService {
 
     @Override
     public void save(CreateSpecialtyRequest request) {
-        Specialty specialty = specialtyRepository.findByNameContainingIgnoreCase(request.getName());
+        Specialty specialty = specialtyRepository.findByNameContainingIgnoreCase(request.getName()).orElse(null);
         if(specialty!=null) {
             throw new InvalidException(messageHelper.getMessage(MessageCode.Specialty.EXIST));
         }

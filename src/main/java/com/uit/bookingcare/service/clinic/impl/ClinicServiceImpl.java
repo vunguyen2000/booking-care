@@ -31,7 +31,7 @@ public class ClinicServiceImpl implements ClinicService {
     private MessageHelper messageHelper;
     @Override
     public void save(CreateClinicRequest request) {
-        Clinic clinic = clinicRepository.findByNameContainingIgnoreCase(request.getName());
+        Clinic clinic = clinicRepository.findByNameContainingIgnoreCase(request.getName()).orElse(null);
         if(clinic !=null){
             throw new InvalidException(messageHelper.getMessage(MessageCode.Clinic.EXIST));
         }

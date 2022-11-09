@@ -1,5 +1,6 @@
 package com.uit.bookingcare.service.booking.impl;
 
+import com.uit.bookingcare.constant.MessageCode;
 import com.uit.bookingcare.constant.enums.EStatus;
 import com.uit.bookingcare.domain.booking.Booking;
 import com.uit.bookingcare.domain.user.User;
@@ -14,8 +15,11 @@ import com.uit.bookingcare.request.booking.PostBookAppointment;
 import com.uit.bookingcare.request.booking.SendRemedyDto;
 import com.uit.bookingcare.request.booking.VerifyBookAppointmentDto;
 import com.uit.bookingcare.service.booking.BookingService;
+import com.uit.bookingcare.service.exception.InvalidException;
+import com.uit.bookingcare.utils.MessageHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -32,13 +36,13 @@ public class BookingServiceImpl implements BookingService {
     private final UserMapper userMapper;
     private final PatientRepository patientRepository;
     private final PatientMapper patientMapper;
-
+    @Autowired
+    private MessageHelper messageHelper;
 
     @Override
     public void update(VerifyBookAppointmentDto request) {
-        Booking oldBooking = bookingRepository.findByTokenContainingIgnoreCase(request.getToken());
-        if(oldBooking!=null)
-        {
+        Booking oldBooking = bookingRepository.findByTokenContainingIgnoreCase(request.getToken()).orElse(null);
+        if (oldBooking != null) {
             oldBooking.setStatusId(EStatus.S2);
             bookingRepository.save(oldBooking);
         }
@@ -47,19 +51,30 @@ public class BookingServiceImpl implements BookingService {
     @Override
     @Transactional(rollbackOn = Exception.class)
     public void create(PostBookAppointment request) {
-        if(request.getScheduleId()!=null&request.getEmail()!=null) {
+        User user = userRepository.findByEmail(request.getEmail()).orElse(null);
+        if (user != null) {
+            Booking booking = bookingRepository.findByPatientIdAndScheduleId(user.getId(), request.getScheduleId()).orElse(null);
+            if (booking != null) {
+                throw new InvalidException(messageHelper.getMessage(MessageCode.Booking.IS_EXIST));
+            }else {
+                request.setStatusId(EStatus.S1);
+                request.setPatientId(user.getId());
+                bookingRepository.save(bookingMapper.createNewBooking(request));
+            }
+        }
+        else {
             User newUser = userRepository.saveAndFlush(userMapper.createNewPatient(request));
             request.setStatusId(EStatus.S1);
             request.setPatientId(newUser.getId());
             bookingRepository.save(bookingMapper.createNewBooking(request));
         }
+
     }
 
     @Override
     public void sendRemedy(SendRemedyDto request) {
-        Booking oldBooking = bookingRepository.findByTokenContainingIgnoreCase(request.getToken());
-        if(oldBooking!=null)
-        {
+        Booking oldBooking = bookingRepository.findByTokenContainingIgnoreCase(request.getToken()).orElse(null);
+        if (oldBooking != null) {
             oldBooking.setStatusId(EStatus.S3);
             bookingRepository.save(oldBooking);
         }

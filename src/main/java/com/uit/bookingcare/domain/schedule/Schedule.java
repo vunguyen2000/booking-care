@@ -31,8 +31,6 @@ public class Schedule extends SqlEntity {
     @JoinColumn(name = "doctor_id")
     private DoctorInfor doctorInfor;
 
-
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "schedule")
     private Set<Booking> bookings = new HashSet<>();
 

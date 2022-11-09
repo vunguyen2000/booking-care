@@ -12,7 +12,7 @@ public interface ClinicRepository extends JpaRepository<Clinic, Long> {
     Optional<Clinic> findById(Long id);
     List<Clinic> findAllByNameContainingIgnoreCase(String name);
 
-    Clinic findByNameContainingIgnoreCase(String name);
+    Optional<Clinic> findByNameContainingIgnoreCase(String name);
     List<Clinic> findAllByNameContainingIgnoreCaseOrAddressContainingIgnoreCase(String name, String address);
 
 }
