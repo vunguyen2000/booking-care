@@ -19,13 +19,13 @@ public interface DoctorService {
 
     DetailDoctorDataDto getDetailDoctorById(Long id);
 
-    List<DoctorScheduleDto> getScheduleDoctorByDate(Long doctorId, LocalDate date);
+    List<DoctorScheduleDto> getScheduleDoctorByDate(Long doctorId, Long date);
 
     void save(UpdateDoctorInforRequest request);
 
     DoctorExtraDto getExtraDoctorById(Long doctorId);
 
-    List<DoctorPatientBookingDto> getListPatientDoctorByDate(Long doctorId, LocalDate date);
+    List<DoctorPatientBookingDto> getListPatientDoctorByDate(Long doctorId, Long date);
     DetailDoctorDataDto getProfileDoctorById(Long doctorId);
 
     void bulkCreateSchedule(BulkCreateSchedule request);

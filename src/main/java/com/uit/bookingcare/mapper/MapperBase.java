@@ -7,7 +7,11 @@ import com.uit.bookingcare.dto.response.FileCaption;
 import com.uit.bookingcare.dto.user.UserDto;
 import org.apache.commons.text.StringEscapeUtils;
 import org.mapstruct.Named;
+import org.springframework.lang.Nullable;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 
 public interface MapperBase {
@@ -53,5 +57,23 @@ public interface MapperBase {
         if (captions == null) return null;
         Gson gson = new Gson();
         return gson.toJson(captions);
+    }
+
+    @Nullable
+    default Long localDateToLong(@Nullable LocalDate localDate) {
+        if (localDate == null) {
+            return null;
+        }
+
+        return localDate.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli();
+    }
+
+    @Nullable
+    default LocalDate longToLocalDate(@Nullable Long milli) {
+        if (milli == null) {
+            return null;
+        }
+
+        return Instant.ofEpochMilli(milli).atZone(ZoneId.systemDefault()).toLocalDate();
     }
 }

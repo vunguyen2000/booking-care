@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -21,9 +22,9 @@ public class Schedule extends SqlEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private long currentnumber;
-    private long maxNumber;
-    private LocalDate date;
+    private Long currentnumber;
+    private Long maxNumber;
+    private Long date;
     @Enumerated(EnumType.STRING)
     private ETimeType timeType;
 

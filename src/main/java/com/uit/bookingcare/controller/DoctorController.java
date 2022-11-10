@@ -56,9 +56,8 @@ public class DoctorController {
     }
     @ApiOperation(value = "get schedule doctor by date", authorizations = {@Authorization(value = "JWT")})
     @GetMapping(value = "/get-schedule-doctor-by-date")
-    @PreAuthorize("@securityService.hasRole('USER')")
     public ResponseEntity<?> getScheduleDoctorByDate(@RequestParam(value = "doctorId") Long doctorId,
-                                                     @RequestParam(value = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+                                                     @RequestParam(value = "date") Long date) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new ApiResponse(doctorService.getScheduleDoctorByDate(doctorId, date)));
     }
@@ -72,7 +71,7 @@ public class DoctorController {
     @GetMapping(value = "/get-list-patient-for-doctor")
     @PreAuthorize("@securityService.hasRole('USER')")
     public ResponseEntity<?> getPatientDoctorByDate(@RequestParam(value = "doctorId") Long doctorId,
-                                                    @RequestParam(value = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+                                                    @RequestParam(value = "date") Long date) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new ApiResponse(doctorService.getListPatientDoctorByDate(doctorId, date)));
     }
@@ -96,7 +95,6 @@ public class DoctorController {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new ApiResponse(doctorService.search(text)));
     }
-
     @ApiOperation(value = "send -remedy", authorizations = {@Authorization(value = "JWT")})
     @PostMapping(value = "/send-remedy")
     @PreAuthorize("@securityService.hasRole('USER')")

@@ -79,6 +79,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/top-doctor-home").permitAll()
                 .antMatchers("/get-detail-doctor-by-id").permitAll()
                 .antMatchers("/get-profile-doctor-by-id").permitAll()
+                .antMatchers("/get-schedule-doctor-by-date").permitAll()
                 .antMatchers("/search").permitAll()
                 .antMatchers("/**").permitAll()
                 // all other requests need to be authenticated

@@ -1,8 +1,10 @@
 package com.uit.bookingcare.domain.doctor;
 
+import com.google.common.collect.ImmutableMap;
 import com.uit.bookingcare.constant.enums.*;
 import com.uit.bookingcare.domain.SqlEntity;
 import com.uit.bookingcare.domain.clinics.Clinic;
+import com.uit.bookingcare.domain.clinics.join.ClinicSpecialty;
 import com.uit.bookingcare.domain.history.Histories;
 import com.uit.bookingcare.domain.schedule.Schedule;
 import com.uit.bookingcare.domain.speciatly.Specialty;
@@ -13,6 +15,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -42,9 +45,6 @@ public class DoctorInfor extends SqlEntity {
     @Column(name = "content_html", columnDefinition = "TEXT")
     private String contentHTML;
 
-    @Convert(converter = ECalendarShiftConverter.class)
-    private List<ETimeType> calendarShifts;
-
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @MapsId
     @JoinColumn(name = "id")
@@ -54,13 +54,6 @@ public class DoctorInfor extends SqlEntity {
 
     private Integer count;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "clinic_id")
-    private Clinic clinic;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "specialty_id")
-    private Specialty specialty;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "doctorInfor")
     private Set<Schedule> schedules = new HashSet<>();
@@ -68,4 +61,15 @@ public class DoctorInfor extends SqlEntity {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "doctorInfor")
     private Set<Histories> histories = new HashSet<>();
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "doctorInfor")
+    private List<ClinicSpecialty> clinicSpecialties = new ArrayList<>();
+
+    public void setClinicSpecialties(List<ClinicSpecialty> clinicSpecialties) {
+        this.getClinicSpecialties().clear();
+        this.clinicSpecialties = clinicSpecialties;
+    }
+
+    public void setClinicSpecialties(ClinicSpecialty clinicSpecialty) {
+        this.setClinicSpecialties(List.of(clinicSpecialty));
+    }
 }

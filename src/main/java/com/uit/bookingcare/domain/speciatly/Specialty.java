@@ -2,13 +2,16 @@ package com.uit.bookingcare.domain.speciatly;
 
 import com.uit.bookingcare.domain.SqlEntity;
 import com.uit.bookingcare.domain.clinics.Clinic;
+import com.uit.bookingcare.domain.clinics.join.ClinicSpecialty;
 import com.uit.bookingcare.domain.doctor.DoctorInfor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -28,12 +31,5 @@ public class Specialty extends SqlEntity {
     private String descriptionMarkdown;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "specialty")
-    private List<DoctorInfor> doctorInfor = new ArrayList<>();
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "clinic_id")
-    private Clinic clinic;
-
-
-
+    private Set<ClinicSpecialty> clinicSpecialties = new HashSet<>();
 }

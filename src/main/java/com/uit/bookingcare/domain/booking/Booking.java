@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
@@ -24,8 +25,6 @@ public class Booking extends SqlEntity {
     @Column(name = "status_id")
     @Enumerated(EnumType.STRING)
     private EStatus statusId;
-
-    private String date;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "patient_id")

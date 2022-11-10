@@ -1,6 +1,7 @@
 package com.uit.bookingcare.domain.clinics;
 
 import com.uit.bookingcare.domain.SqlEntity;
+import com.uit.bookingcare.domain.clinics.join.ClinicSpecialty;
 import com.uit.bookingcare.domain.doctor.DoctorInfor;
 import com.uit.bookingcare.domain.speciatly.Specialty;
 import lombok.AllArgsConstructor;
@@ -29,10 +30,8 @@ public class Clinic extends SqlEntity {
     @Column(name = "description_markdown", columnDefinition = "TEXT")
     private String descriptionMarkdown;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "clinic")
-    private Set<DoctorInfor> doctorInfors = new HashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "clinic")
-    private Set<Specialty> specialties = new HashSet<>();
+    private Set<ClinicSpecialty> clinicSpecialties = new HashSet<>();
 
 }

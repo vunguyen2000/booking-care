@@ -84,7 +84,7 @@ public class DoctorInforServiceImpl implements DoctorService {
     }
 
     @Override
-        public  List<DoctorScheduleDto> getScheduleDoctorByDate(Long doctorId, LocalDate date) {
+        public  List<DoctorScheduleDto> getScheduleDoctorByDate(Long doctorId, Long date) {
         return scheduleMapper.toDoctorScheduleDtoList(scheduleRepository.findAllByDoctorIdAndScheduleDate(doctorId, date));
     }
 
@@ -109,7 +109,7 @@ public class DoctorInforServiceImpl implements DoctorService {
         return doctorInforMapper.toExtraDoctorInforDto(doctorInforReposioty.findById(doctorId).orElse(null));
     }
     @Override
-    public List<DoctorPatientBookingDto> getListPatientDoctorByDate(Long doctorId, LocalDate date) {
+    public List<DoctorPatientBookingDto> getListPatientDoctorByDate(Long doctorId, Long date) {
         DoctorInfor doctorInfor = doctorInforReposioty.findById(doctorId).orElse(null);
         if(doctorInfor ==null){
             throw new NotFoundException(messageHelper.getMessage(MessageCode.DoctorInfor.NOT_FOUND));
