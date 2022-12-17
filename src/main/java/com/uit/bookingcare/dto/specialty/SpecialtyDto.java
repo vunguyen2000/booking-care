@@ -3,10 +3,12 @@ package com.uit.bookingcare.dto.specialty;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.uit.bookingcare.dto.BaseDto;
-import com.uit.bookingcare.dto.clinics.ClinicDto;
+import com.uit.bookingcare.dto.doctor.DoctorInforScheduleDto;
+import com.uit.bookingcare.dto.schedule.ScheduleDoctorDto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.Objects;
 
 @Data
@@ -19,7 +21,7 @@ public class SpecialtyDto extends BaseDto {
     private String descriptionHTML;
     private String descriptionMarkdown;
     private String image;
-
+    private List<DoctorInforScheduleDto> doctorInforSchedules;
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

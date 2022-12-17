@@ -1,17 +1,17 @@
 package com.uit.bookingcare.service.specialty.impl;
 
 import com.uit.bookingcare.constant.MessageCode;
-import com.uit.bookingcare.domain.clinics.Clinic;
+import com.uit.bookingcare.domain.clinics.join.ClinicSpecialty;
+import com.uit.bookingcare.domain.doctor.DoctorInfor;
 import com.uit.bookingcare.domain.speciatly.Specialty;
-import com.uit.bookingcare.dto.clinics.ClinicDto;
+import com.uit.bookingcare.dto.doctor.SearchDto;
 import com.uit.bookingcare.dto.specialty.SpecialtyDto;
-import com.uit.bookingcare.mapper.clinics.ClinicMapper;
 import com.uit.bookingcare.mapper.specialty.SpecialtyMapper;
-import com.uit.bookingcare.repository.clinic.ClinicRepository;
+import com.uit.bookingcare.repository.clinic.ClinicSpecialtyRepository;
 import com.uit.bookingcare.repository.specialty.SpecialtyRepository;
-import com.uit.bookingcare.request.clinic.UpdateClinicRequest;
 import com.uit.bookingcare.request.specialty.CreateSpecialtyRequest;
 import com.uit.bookingcare.request.specialty.UpdateSpecialtyRequest;
+import com.uit.bookingcare.service.doctorInfor.DoctorService;
 import com.uit.bookingcare.service.exception.InvalidException;
 import com.uit.bookingcare.service.exception.NotFoundException;
 import com.uit.bookingcare.service.specialty.SpecialtyService;
@@ -22,6 +22,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -32,13 +34,16 @@ public class SpecialtyServiceImpl implements SpecialtyService {
 
     private final SpecialtyRepository specialtyRepository;
 
+    private final DoctorService doctorService;
+
+    private final ClinicSpecialtyRepository clinicSpecialtyRepository;
     @Autowired
     private MessageHelper messageHelper;
 
     @Override
     public void save(CreateSpecialtyRequest request) {
         Specialty specialty = specialtyRepository.findByNameContainingIgnoreCase(request.getName()).orElse(null);
-        if(specialty!=null) {
+        if (specialty != null) {
             throw new InvalidException(messageHelper.getMessage(MessageCode.Specialty.EXIST));
         }
         specialtyRepository.save(specialtyMapper.toSpecialty(request));
@@ -51,7 +56,17 @@ public class SpecialtyServiceImpl implements SpecialtyService {
 
     @Override
     public SpecialtyDto findById(Long id) {
-        return specialtyMapper.toSpecialtyDto(specialtyRepository.findById(id).orElse(null));
+        Specialty specialty = specialtyRepository.findById(id).orElse(null);
+        if (specialty == null) {
+            throw new InvalidException(messageHelper.getMessage(MessageCode.Specialty.NOT_FOUND));
+        }
+
+        SpecialtyDto specialtyDto = specialtyMapper.toSpecialtyDto(specialty);
+
+        List<ClinicSpecialty> clinicSpecialties = clinicSpecialtyRepository.findBySpecialtyId(specialtyDto.getId());
+        specialtyDto.setDoctorInforSchedules(doctorService.getScheduleDoctors(clinicSpecialties.stream().map(cs -> cs.getDoctorInfor().getId()).collect(Collectors.toList())));
+
+        return specialtyDto;
     }
 
     @Override
@@ -62,5 +77,13 @@ public class SpecialtyServiceImpl implements SpecialtyService {
         }
         specialtyMapper.updateSpecialty(request, oldSpecialty);
         specialtyRepository.save(oldSpecialty);
+    }
+
+    @Override
+    public SearchDto search(String text) {
+        SearchDto dto = new SearchDto();
+
+        dto.setSpecialties(specialtyMapper.specialtySearchDtoList(specialtyRepository.findAllByNameContainingIgnoreCase(text)));
+        return dto;
     }
 }

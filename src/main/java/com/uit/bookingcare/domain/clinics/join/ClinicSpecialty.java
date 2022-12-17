@@ -15,7 +15,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "clinic_specialty")
-public class ClinicSpecialty extends SqlEntity {
+    public class ClinicSpecialty extends SqlEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;

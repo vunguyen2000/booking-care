@@ -12,14 +12,10 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.awt.*;
-import java.time.LocalDate;
 
 @Slf4j
 @RestController
@@ -29,7 +25,7 @@ public class DoctorController {
     private final DoctorService doctorService;
     private  final BookingService bookingService;
     @ApiOperation(value = "get all doctors", authorizations = {@Authorization(value = "JWT")})
-    @GetMapping(value = "/get-all-doctors")
+    @GetMapping(value = "/doctors")
     public ResponseEntity<?> getAllDoctor() {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new ApiResponse(doctorService.findAll()));
@@ -41,8 +37,8 @@ public class DoctorController {
                 .body(new ApiResponse(doctorService.getTopDoctor(limit)));
     }
     @ApiOperation(value = "get detail doctor by id", authorizations = {@Authorization(value = "JWT")})
-    @GetMapping(value = "/get-detail-doctor-by-id")
-    public ResponseEntity<?> getDetailDoctorById(@RequestParam(value = "id", required = false) Long id) {
+    @GetMapping(value = "/doctors/{id}")
+    public ResponseEntity<?> getDetailDoctorById(@PathVariable(value = "id", required = false) Long id) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new ApiResponse(doctorService.getDetailDoctorById(id)));
     }
@@ -89,7 +85,7 @@ public class DoctorController {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new ApiResponse());
     }
-    @ApiOperation(value = "seach doctor and clinic", authorizations = {@Authorization(value = "JWT")})
+    @ApiOperation(value = "search doctor and clinic", authorizations = {@Authorization(value = "JWT")})
     @GetMapping(value = "/search")
     public ResponseEntity<?> search(@RequestParam(value = "text", required = false) String text) {
         return ResponseEntity.status(HttpStatus.OK)

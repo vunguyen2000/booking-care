@@ -17,6 +17,7 @@ public class DoctorExtraDto extends BaseDto {
     private String addressClinic;
     private String nameClinic;
     private Long specialtyId;
+    private String image;
     private Long clinicId;
     private EPrice priceId;
     private EProvince provinceId;

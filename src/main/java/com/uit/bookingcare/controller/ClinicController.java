@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 public class ClinicController {
     private final ClinicService clinicService;
     @ApiOperation(value = "Create new clinic", authorizations = {@Authorization(value = "JWT")})
-    @PostMapping(value = "/create-new-clinic")
+    @PostMapping(value = "/clinics")
     @PreAuthorize("@securityService.hasRole('ADMIN')")
     public ResponseEntity<?> createClinic(@RequestBody CreateClinicRequest request) {
         clinicService.save(request);
@@ -29,13 +29,20 @@ public class ClinicController {
                 .body(new ApiResponse());
     }
     @ApiOperation(value = "Get all clinic", authorizations = {@Authorization(value = "JWT")})
-    @GetMapping(value = "/get-clinic")
+    @GetMapping(value = "/clinics")
     public ResponseEntity<?> getClinic() {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new ApiResponse(clinicService.findAll()));
     }
+    @ApiOperation(value = "get top clinic", authorizations = {@Authorization(value = "JWT")})
+    @GetMapping(value = "/top-clinic-home")
+    public ResponseEntity<?> getTopClinic(@RequestParam(value = "limit", required = false) Integer limit) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new ApiResponse(clinicService.getTopClinic(limit)));
+    }
+
     @ApiOperation(value = "Edit clinic", authorizations = {@Authorization(value = "JWT")})
-    @PutMapping(value = "/edit-clinic")
+    @PutMapping(value = "/clinics")
     @PreAuthorize("@securityService.hasRole('ADMIN')")
     public ResponseEntity<?> editClinic(@RequestParam Long id,
                                         @RequestBody UpdateClinicRequest request) {
@@ -44,9 +51,16 @@ public class ClinicController {
                 .body(new ApiResponse());
     }
     @ApiOperation(value = "Get detail clinic by id", authorizations = {@Authorization(value = "JWT")})
-    @GetMapping(value = "/get-detail-clinic-by-id")
-    public ResponseEntity<?> findById(@RequestParam Long id) {
+    @GetMapping(value = "/clinics/{id}")
+    public ResponseEntity<?> findById(@PathVariable  Long id) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new ApiResponse(clinicService.findById(id)));
+    }
+
+    @ApiOperation(value = "search clinic", authorizations = {@Authorization(value = "JWT")})
+    @GetMapping(value = "/clinics/search")
+    public ResponseEntity<?> search(@RequestParam(value = "text", required = false) String text) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new ApiResponse(clinicService.search(text)));
     }
 }

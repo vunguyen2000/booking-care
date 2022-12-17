@@ -23,6 +23,7 @@ public class Clinic extends SqlEntity {
     private long id;
     private String name;
     private String address;
+    private Integer count;
     @Column( columnDefinition = "TEXT")
     private String image;
     @Column(name = "description_html", columnDefinition = "TEXT")

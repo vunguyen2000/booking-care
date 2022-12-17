@@ -1,15 +1,11 @@
 package com.uit.bookingcare.domain.doctor;
 
-import com.google.common.collect.ImmutableMap;
 import com.uit.bookingcare.constant.enums.*;
 import com.uit.bookingcare.domain.SqlEntity;
-import com.uit.bookingcare.domain.clinics.Clinic;
 import com.uit.bookingcare.domain.clinics.join.ClinicSpecialty;
 import com.uit.bookingcare.domain.history.Histories;
 import com.uit.bookingcare.domain.schedule.Schedule;
-import com.uit.bookingcare.domain.speciatly.Specialty;
 import com.uit.bookingcare.domain.user.User;
-import com.uit.bookingcare.utils.ECalendarShiftConverter;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

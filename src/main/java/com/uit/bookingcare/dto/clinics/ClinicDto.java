@@ -3,9 +3,14 @@ package com.uit.bookingcare.dto.clinics;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.uit.bookingcare.dto.BaseDto;
+import com.uit.bookingcare.dto.doctor.DoctorDataDto;
+import com.uit.bookingcare.dto.doctor.DoctorExtraDto;
+import com.uit.bookingcare.dto.doctor.DoctorInforDto;
+import com.uit.bookingcare.dto.doctor.DoctorInforScheduleDto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.Objects;
 
 @Data
@@ -22,6 +27,8 @@ public class ClinicDto extends BaseDto {
     private String descriptionHTML;
     private String descriptionMarkdown;
     private String image;
+    private Integer count;
+    private List<DoctorInforScheduleDto> doctorInforSchedules;
 
     @Override
     public boolean equals(Object o) {

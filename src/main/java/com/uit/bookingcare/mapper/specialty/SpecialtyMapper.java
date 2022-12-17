@@ -3,7 +3,9 @@ package com.uit.bookingcare.mapper.specialty;
 import com.uit.bookingcare.domain.clinics.Clinic;
 import com.uit.bookingcare.domain.speciatly.Specialty;
 import com.uit.bookingcare.dto.clinics.ClinicDto;
+import com.uit.bookingcare.dto.clinics.ClinicSearchDto;
 import com.uit.bookingcare.dto.specialty.SpecialtyDto;
+import com.uit.bookingcare.dto.specialty.SpecialtySearchDto;
 import com.uit.bookingcare.mapper.MapperBase;
 import com.uit.bookingcare.request.clinic.CreateClinicRequest;
 import com.uit.bookingcare.request.clinic.UpdateClinicRequest;
@@ -29,4 +31,8 @@ public abstract class SpecialtyMapper implements MapperBase {
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     public abstract void updateSpecialty(UpdateSpecialtyRequest dto, @MappingTarget Specialty entity);
 
+
+    public abstract SpecialtySearchDto specialtySearchDto(Specialty specialty);
+
+    public abstract List<SpecialtySearchDto> specialtySearchDtoList(List<Specialty> Specialties);
 }

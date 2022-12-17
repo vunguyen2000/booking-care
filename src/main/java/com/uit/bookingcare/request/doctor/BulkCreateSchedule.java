@@ -1,6 +1,6 @@
 package com.uit.bookingcare.request.doctor;
 
-import com.uit.bookingcare.dto.schedule.ArrSchedule;
+import com.uit.bookingcare.dto.schedule.ScheduleDto;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -8,6 +8,6 @@ import java.time.LocalDate;
 public class BulkCreateSchedule {
     private Long doctorId;
     private LocalDate formatedDate;
-    private ArrSchedule arrSchedule;
+    private ScheduleDto arrSchedule;
 
 }

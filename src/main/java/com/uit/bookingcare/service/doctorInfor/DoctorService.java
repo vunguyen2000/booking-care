@@ -1,15 +1,11 @@
 package com.uit.bookingcare.service.doctorInfor;
 
-import com.uit.bookingcare.dto.doctor.DetailDoctorDataDto;
-import com.uit.bookingcare.dto.doctor.DoctorExtraDto;
-import com.uit.bookingcare.dto.doctor.DoctorInforDto;
-import com.uit.bookingcare.dto.doctor.SearchDto;
+import com.uit.bookingcare.dto.doctor.*;
 import com.uit.bookingcare.dto.schedule.DoctorPatientBookingDto;
-import com.uit.bookingcare.dto.schedule.DoctorScheduleDto;
+import com.uit.bookingcare.dto.schedule.ScheduleDoctorDto;
 import com.uit.bookingcare.request.doctor.BulkCreateSchedule;
 import com.uit.bookingcare.request.doctor.UpdateDoctorInforRequest;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public interface DoctorService {
@@ -19,7 +15,9 @@ public interface DoctorService {
 
     DetailDoctorDataDto getDetailDoctorById(Long id);
 
-    List<DoctorScheduleDto> getScheduleDoctorByDate(Long doctorId, Long date);
+    List<ScheduleDoctorDto> getScheduleDoctorByDate(Long doctorId, Long date);
+
+    List<DoctorInforScheduleDto> getScheduleDoctors(List<Long> doctorIds);
 
     void save(UpdateDoctorInforRequest request);
 

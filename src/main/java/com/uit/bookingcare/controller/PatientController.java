@@ -38,4 +38,5 @@ public class PatientController {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new ApiResponse());
     }
+
 }

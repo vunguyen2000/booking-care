@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class DoctorScheduleDto extends BaseDto {
+public class ScheduleDoctorDto extends BaseDto {
     private Long id;
 
     private Long currentNumber;

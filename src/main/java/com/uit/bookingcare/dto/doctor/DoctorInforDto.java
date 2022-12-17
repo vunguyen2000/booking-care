@@ -20,6 +20,7 @@ public class DoctorInforDto extends BaseDto {
     private String lastName;
     private String address;
     private String phonenumber;
+    private String image;
     private String email;
     private EGender gender;
     private ERoleType roleId;

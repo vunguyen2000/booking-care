@@ -22,7 +22,7 @@ public class SpecialtyController {
 
     private final SpecialtyService specialtyService;
     @ApiOperation(value = "Create new specialty", authorizations = {@Authorization(value = "JWT")})
-    @PostMapping(value = "/create-new-specialty")
+    @PostMapping(value = "/specialties")
     @PreAuthorize("@securityService.hasRole('ADMIN')")
     public ResponseEntity<?> createSpecialty(@RequestBody CreateSpecialtyRequest request) {
         specialtyService.save(request);
@@ -30,13 +30,13 @@ public class SpecialtyController {
                 .body(new ApiResponse());
     }
     @ApiOperation(value = "get all specialty", authorizations = {@Authorization(value = "JWT")})
-    @GetMapping(value = "/get-specialty")
+    @GetMapping(value = "/specialties")
     public ResponseEntity<?> getSpecialty() {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new ApiResponse(specialtyService.findAll()));
     }
     @ApiOperation(value = "edit specialty", authorizations = {@Authorization(value = "JWT")})
-    @PutMapping(value = "/edit-specialty")
+    @PutMapping(value = "/specialties")
     @PreAuthorize("@securityService.hasRole('ADMIN')")
     public ResponseEntity<?> editClinic(@RequestParam Long id,
                                         @RequestBody UpdateSpecialtyRequest request) {
@@ -45,9 +45,15 @@ public class SpecialtyController {
                 .body(new ApiResponse());
     }
     @ApiOperation(value = "Get detail specialty by id", authorizations = {@Authorization(value = "JWT")})
-    @GetMapping(value = "/get-detail-specialty-by-id")
-    public ResponseEntity<?> findById(@RequestParam Long id) {
+    @GetMapping(value = "/specialties/{id}")
+    public ResponseEntity<?> findById(@PathVariable  Long id) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new ApiResponse(specialtyService.findById(id)));
+    }
+    @ApiOperation(value = "search specialty", authorizations = {@Authorization(value = "JWT")})
+    @GetMapping(value = "/specialties/search")
+    public ResponseEntity<?> search(@RequestParam(value = "text", required = false) String text) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new ApiResponse(specialtyService.search(text)));
     }
 }

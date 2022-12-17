@@ -46,6 +46,7 @@ public abstract class DoctorInforMapper implements MapperBase {
     @Mapping(source = "user.address", target = "address")
     @Mapping(source = "user.phonenumber", target = "phonenumber")
     @Mapping(source = "user.email", target = "email")
+    @Mapping(source = "user.image", target = "image")
     @Mapping(source = "user.gender", target = "gender")
     @Mapping(source = "user.role.id", target = "roleId")
     @Mapping(source = "position", target = "positionId")
@@ -79,6 +80,7 @@ public abstract class DoctorInforMapper implements MapperBase {
     @Mapping(source = "payment", target = "paymentId")
     @Mapping(source = "count", target = "count")
     @Mapping(source = "note", target = "note")
+    @Mapping(source = "user.image", target = "image")
     public abstract DoctorExtraDto toExtraDoctorInforDto(DoctorInfor doctorInfor);
 
     @Named("updateDoctorInfor")

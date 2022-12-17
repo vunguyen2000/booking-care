@@ -71,8 +71,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // dont authenticate this particular request
                 .authorizeRequests()
                 .antMatchers("/auth/login").permitAll()
-                .antMatchers("/public/**").permitAll()
-                .antMatchers("/tuition/**").permitAll()
                 .antMatchers("/get-clinic").permitAll()
                 .antMatchers("/get-specialty").permitAll()
                 .antMatchers("/get-all-doctors").permitAll()

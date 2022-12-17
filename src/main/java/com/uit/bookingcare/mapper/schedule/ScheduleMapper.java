@@ -1,17 +1,17 @@
 package com.uit.bookingcare.mapper.schedule;
 
 import com.uit.bookingcare.constant.enums.EGender;
-import com.uit.bookingcare.constant.enums.EStatus;
 import com.uit.bookingcare.constant.enums.ETimeType;
 import com.uit.bookingcare.domain.booking.Booking;
-import com.uit.bookingcare.domain.patient.Patient;
 import com.uit.bookingcare.domain.schedule.Schedule;
 import com.uit.bookingcare.domain.user.User;
+import com.uit.bookingcare.dto.doctor.DoctorInforScheduleDto;
 import com.uit.bookingcare.dto.patient.GenderDataDto;
 import com.uit.bookingcare.dto.schedule.DoctorPatientBookingDto;
 import com.uit.bookingcare.dto.doctor.DoctorDataDto;
 import com.uit.bookingcare.dto.patient.PatientDataDto;
-import com.uit.bookingcare.dto.schedule.DoctorScheduleDto;
+import com.uit.bookingcare.dto.schedule.ScheduleDoctorDto;
+import com.uit.bookingcare.dto.schedule.ScheduleDto;
 import com.uit.bookingcare.dto.schedule.TimeTypeDataDto;
 import com.uit.bookingcare.mapper.MapperBase;
 import com.uit.bookingcare.repository.booking.BookingRepository;
@@ -35,7 +35,7 @@ public abstract class ScheduleMapper implements MapperBase {
     private PatientRepository patientRepository;
     @Named("toDoctorScheduleDto")
     @BeforeMapping
-    protected void toDoctorScheduleDto(Schedule schedule, @MappingTarget DoctorScheduleDto dto) {
+    protected void toDoctorScheduleDto(Schedule schedule, @MappingTarget ScheduleDoctorDto dto) {
         ETimeType timeType = schedule.getTimeType();
         User user = userRepository.findById(schedule.getDoctorInfor().getId()).orElse(null);
         dto.setTimeTypeData(new TimeTypeDataDto(timeType.getValueEn(), timeType.getValueVi()));
@@ -46,9 +46,15 @@ public abstract class ScheduleMapper implements MapperBase {
 
     @BeanMapping(qualifiedByName = "toDoctorScheduleDto")
     @Mapping(source = "doctorInfor.id", target = "doctorId")
-    public abstract DoctorScheduleDto toDoctorScheduleDto(Schedule schedule);
+    public abstract ScheduleDoctorDto toDoctorScheduleDto(Schedule schedule);
 
-    public abstract List<DoctorScheduleDto> toDoctorScheduleDtoList(List<Schedule> schedules);
+    public abstract List<ScheduleDoctorDto> toDoctorScheduleDtoList(List<Schedule> schedules);
+
+    @Mapping(source = "doctorInfor.id", target = "doctorId")
+    public abstract ScheduleDto toScheduleDto(Schedule schedule);
+
+    public abstract List<ScheduleDto> toScheduleDtoList(List<Schedule> schedules);
+
     @Named("toDoctorPatientBookingDto")
     @BeforeMapping
     protected void toDoctorPatientBookingDto(Schedule schedule, @MappingTarget DoctorPatientBookingDto dto) {
