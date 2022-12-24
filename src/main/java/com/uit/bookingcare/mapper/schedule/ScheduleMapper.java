@@ -59,7 +59,8 @@ public abstract class ScheduleMapper implements MapperBase {
     @BeforeMapping
     protected void toDoctorPatientBookingDto(Schedule schedule, @MappingTarget DoctorPatientBookingDto dto) {
         ETimeType timeType = schedule.getTimeType();
-        Booking booking = bookingRepository.findById(schedule.getId()).orElse(null);
+
+        Booking booking = bookingRepository.findByScheduleId(schedule.getId()).orElse(null);
         if(booking!=null){
             dto.setStatusId(booking.getStatusId());
             dto.setToken(booking.getToken());

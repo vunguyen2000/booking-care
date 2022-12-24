@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'/>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            font-size: 48px;
+        }
+    </style>
+</head>
+<body>
+<p th:text="${'Xin chào, ' + name}"></p>
+<p>Bạn nhận được thông tin này vì đã đặt lịch trên BookingCare</p>
+<p>Thông tin đặt lịch khám bệnh: </p>
+<p th:text="${'- Thời gian: ' + time}"></p>
+<p th:text="${'- Bác sĩ: ' + doctorName}"></p>
+<p th:text="${'- Địa chỉ: ' + address}"></p>
+<p>Nếu các thông tin trên là đúng sự thật, vui lòng click vào đường dẫn để hoàn tất thủ tục</p>
+<a th:href="@{http://localhost:8080/api/patient/verify-and-create-record(token=${token})} ">Link</a><br>
+<p>Đây là email tự động vui lòng không trả lời.</p>
+</body>
+</html>

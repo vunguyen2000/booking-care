@@ -6,8 +6,11 @@ import com.uit.bookingcare.request.booking.VerifyBookAppointmentDto;
 import com.uit.bookingcare.request.clinic.UpdateClinicRequest;
 
 public interface BookingService {
-    void update(VerifyBookAppointmentDto request);
+    void update(String token);
     void create(PostBookAppointment request);
 
     void sendRemedy(SendRemedyDto request);
+
+
+//    void verify(VerifyBookAppointmentDto request);
 }

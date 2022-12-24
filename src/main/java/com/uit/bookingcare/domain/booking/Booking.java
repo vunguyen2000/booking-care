@@ -33,4 +33,5 @@ public class Booking extends SqlEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "schedule_id")
     private Schedule schedule;
+
 }

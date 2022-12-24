@@ -14,8 +14,10 @@ import com.uit.bookingcare.repository.user.UserRepository;
 import com.uit.bookingcare.request.booking.PostBookAppointment;
 import com.uit.bookingcare.request.booking.SendRemedyDto;
 import com.uit.bookingcare.request.booking.VerifyBookAppointmentDto;
+import com.uit.bookingcare.service.ClientService;
 import com.uit.bookingcare.service.booking.BookingService;
 import com.uit.bookingcare.service.exception.InvalidException;
+import com.uit.bookingcare.service.sdi.ClientSdi;
 import com.uit.bookingcare.utils.MessageHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.UUID;
 
 @Service
 @Slf4j
@@ -38,10 +41,12 @@ public class BookingServiceImpl implements BookingService {
     private final PatientMapper patientMapper;
     @Autowired
     private MessageHelper messageHelper;
+    @Autowired
+    private ClientService clientService;
 
     @Override
-    public void update(VerifyBookAppointmentDto request) {
-        Booking oldBooking = bookingRepository.findByTokenContainingIgnoreCase(request.getToken()).orElse(null);
+    public void update(String token) {
+        Booking oldBooking = bookingRepository.findByTokenContainingIgnoreCase(token).orElse(null);
         if (oldBooking != null) {
             oldBooking.setStatusId(EStatus.S2);
             bookingRepository.save(oldBooking);
@@ -59,18 +64,24 @@ public class BookingServiceImpl implements BookingService {
             }else {
                 request.setStatusId(EStatus.S1);
                 request.setPatientId(user.getId());
-                bookingRepository.save(bookingMapper.createNewBooking(request));
             }
         }
         else {
             User newUser = userRepository.saveAndFlush(userMapper.createNewPatient(request));
             request.setStatusId(EStatus.S1);
             request.setPatientId(newUser.getId());
-            bookingRepository.save(bookingMapper.createNewBooking(request));
         }
-
+        Booking booking = bookingMapper.createNewBooking(request);
+        String token = UUID.randomUUID().toString();
+        booking.setToken(token);
+        bookingRepository.save(booking);
+        ClientSdi client = new ClientSdi();
+        client.setEmail(request.getEmail());
+        client.setToken(token);
+        client.setName(request.getFullName());
+        client.setAddress(request.getAddress());
+        clientService.create(client);
     }
-
     @Override
     public void sendRemedy(SendRemedyDto request) {
         Booking oldBooking = bookingRepository.findByTokenContainingIgnoreCase(request.getToken()).orElse(null);
@@ -78,5 +89,14 @@ public class BookingServiceImpl implements BookingService {
             oldBooking.setStatusId(EStatus.S3);
             bookingRepository.save(oldBooking);
         }
+
     }
+//    @Override
+//    public void verify(VerifyBookAppointmentDto request) {
+//        Booking oldBooking = bookingRepository.findByTokenContainingIgnoreCase(request.getToken()).orElse(null);
+//        if (oldBooking != null) {
+//            oldBooking.setStatusId(EStatus.S2);
+//            bookingRepository.save(oldBooking);
+//        }
+//    }
 }

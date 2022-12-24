@@ -12,4 +12,6 @@ public interface BookingRepository extends JpaRepository<Booking,Long> {
     @Query(value = "SELECT * FROM  booking b  " +
             " WHERE b.patient_id = :patientId AND b.schedule_id = :scheduleId", nativeQuery = true)
     Optional<Booking> findByPatientIdAndScheduleId(Long patientId, Long scheduleId);
+
+    Optional <Booking> findByScheduleId(Long scheduleId);
 }

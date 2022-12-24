@@ -30,9 +30,31 @@ spring:
   jackson:
     serialization:
       INDENT_OUTPUT: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    email: 18521671@gm.uit.edu.vn
+    password: 1260446392
+    protocol: smtp
+    isSSL: false
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
 jwt:
   secret: JWTSuperSecretKey
 server:
   port: 8080
   servlet:
     context-path: /api
+
+mailServer:
+  host: smtp.gmail.com
+  port: 587
+  email: 18521671@gm.uit.edu.vn
+  password: 1260446392
+  protocol: smtp
+  isSSL: false

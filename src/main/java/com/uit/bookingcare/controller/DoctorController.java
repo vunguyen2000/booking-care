@@ -65,7 +65,7 @@ public class DoctorController {
     }
     @ApiOperation(value = "get list patient for doctor", authorizations = {@Authorization(value = "JWT")})
     @GetMapping(value = "/get-list-patient-for-doctor")
-    @PreAuthorize("@securityService.hasRole('USER')")
+//    @PreAuthorize("@securityService.hasRole('USER')")
     public ResponseEntity<?> getPatientDoctorByDate(@RequestParam(value = "doctorId") Long doctorId,
                                                     @RequestParam(value = "date") Long date) {
         return ResponseEntity.status(HttpStatus.OK)

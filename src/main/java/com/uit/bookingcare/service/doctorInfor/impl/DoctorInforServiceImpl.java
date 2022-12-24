@@ -83,7 +83,7 @@ public class DoctorInforServiceImpl implements DoctorService {
     @Override
     public DetailDoctorDataDto getDetailDoctorById(Long id) {
         User doctor = userRepository.findById(id).orElse(null);
-        if (doctor == null){
+        if (doctor == null) {
             throw new NotFoundException(messageHelper.getMessage(MessageCode.DoctorInfor.NOT_FOUND));
         }
         DoctorInfor oldDoctor = doctor.getDoctorInfor();
@@ -107,7 +107,7 @@ public class DoctorInforServiceImpl implements DoctorService {
     @Override
     public List<DoctorInforScheduleDto> getScheduleDoctors(List<Long> doctorIds) {
         List<DoctorInforScheduleDto> rs = new ArrayList<>();
-        for (Long doctorId: doctorIds) {
+        for (Long doctorId : doctorIds) {
             DoctorInforScheduleDto dto = new DoctorInforScheduleDto();
             dto.setDoctor(this.getDetailDoctorById(doctorId));
             dto.setSchedules(scheduleMapper.toScheduleDtoList(scheduleRepository.findAllByDoctorId(doctorId)));
@@ -131,18 +131,19 @@ public class DoctorInforServiceImpl implements DoctorService {
     }
 
 
-
     @Override
     public DoctorExtraDto getExtraDoctorById(Long doctorId) {
         return doctorInforMapper.toExtraDoctorInforDto(doctorInforReposioty.findById(doctorId).orElse(null));
     }
+
     @Override
     public List<DoctorPatientBookingDto> getListPatientDoctorByDate(Long doctorId, Long date) {
         DoctorInfor doctorInfor = doctorInforReposioty.findById(doctorId).orElse(null);
-        if(doctorInfor ==null){
+        if (doctorInfor == null) {
             throw new NotFoundException(messageHelper.getMessage(MessageCode.DoctorInfor.NOT_FOUND));
         }
         return scheduleMapper.toDoctorPatientBookingDtoList(scheduleRepository.findAllByDoctorIdAndPatientDate(doctorId, date));
+
     }
 
     @Override
@@ -152,7 +153,6 @@ public class DoctorInforServiceImpl implements DoctorService {
 
     @Override
     public void bulkCreateSchedule(BulkCreateSchedule request) {
-
         scheduleRepository.save(doctorInforMapper.bulkCreateSchedule(request));
     }
 

@@ -6,6 +6,7 @@ public enum EStatus {
     S1("New","Lịch hẹn mới"),
     S2("Confirmed","Đã xác nhận"),
     S3("Done","Đã khám xong"),
+
     S4("Cancel","Đã hủy");
 
     @Getter
